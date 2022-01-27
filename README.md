@@ -1,4 +1,4 @@
 # Apuesta
 
--npm start
--DEBUG=express:* npm start
+-> npm start
+-> DEBUG=express:* npm start
