@@ -81,7 +81,6 @@ import {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    IconSetService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -90,13 +89,9 @@ import {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              'clientId'
+              '831612447328-o4jk13j8kk0jvlfog5pqgk94km5kn112.apps.googleusercontent.com'
             )
           },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('clientId')
-          }
         ]
       } as SocialAuthServiceConfig,
     }
