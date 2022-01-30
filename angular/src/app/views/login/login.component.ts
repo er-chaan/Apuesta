@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { SocialAuthService } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
 import { SocialUser } from "angularx-social-login";
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-dashboard',
@@ -12,10 +14,10 @@ export class LoginComponent {
   user: SocialUser;
   loggedIn: boolean;
 
-  constructor(private router: Router, private authService: SocialAuthService) { }
+  constructor(private spinner: NgxSpinnerService, private toastr: ToastrService, private router: Router, private authService: SocialAuthService) { }
 
   ngOnInit() {
-    if(sessionStorage.getItem("token")){
+    if (sessionStorage.getItem("token")) {
       this.router.navigate(["/"]);
       return
     }
@@ -26,11 +28,15 @@ export class LoginComponent {
   }
 
   signInWithGoogle(): void {
+    this.spinner.show();
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x) => {
-      // console.log("signin ==> ", this.user);
-      sessionStorage.setItem("token",this.user.authToken);
+      sessionStorage.setItem("token", this.user.authToken);
       sessionStorage.setItem("user", JSON.stringify(this.user));
+      this.spinner.hide();
       this.router.navigate(["/"]);
+    }).catch((x)=>{
+      this.spinner.hide();
+      this.toastr.error('API Error');
     });
 
   }

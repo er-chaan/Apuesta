@@ -50,6 +50,13 @@ import {
   FacebookLoginProvider
 } from 'angularx-social-login';
 
+// toaster
+import { ToastrModule } from 'ngx-toastr';
+
+// spinner
+import { NgxSpinnerModule } from "ngx-spinner";
+
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -66,7 +73,9 @@ import {
     ChartsModule,
     IconModule,
     IconSetModule.forRoot(),
-    SocialLoginModule
+    SocialLoginModule,
+    ToastrModule.forRoot(),
+    NgxSpinnerModule
   ],
   declarations: [
     AppComponent,
