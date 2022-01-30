@@ -25,12 +25,14 @@ var closedMiddleware = function (req, res, next) {
         if (token != 'x') {
             dbConn.query('SELECT id FROM users where ? AND ?', [{ email: email }, { token: token }], function (error, results, fields) {
                 if (error) {
-                    return res.status(401).send({ error: true, message: error.message });
+                    return res.status(200).send({ status: false, error: error.sqlMessage });
+                } else {
+                    if (results.length) {
+                        next();
+                    } else {
+                        res.status(401).send("unauthorized");
+                    }
                 }
-                if (!results[0]) {
-                    return res.status(401).send({ error: true, message: "unauthorized" });
-                }
-                next();
             });
         } else {
             res.status(401).send("unauthorized");
@@ -45,18 +47,21 @@ var adminMiddleware = function (req, res, next) {
     email = req.headers.email;
     if (token) {
         if (token != 'x') {
-            if (email != '9004313006') {
-                return res.status(401).send({ error: true, message: "unauthorized" });
+            if (email != 'er.chandreshbhai@gmail.com') {
+                res.status(401).send("unauthorized");
+            } else {
+                dbConn.query('SELECT id FROM users where ? AND ?', [{ email: email }, { token: token }], function (error, results, fields) {
+                    if (error) {
+                        return res.status(200).send({ status: false, error: error.sqlMessage });
+                    }else{
+                        if (results.length) {
+                            next();
+                        } else {
+                            res.status(401).send("unauthorized");
+                        }
+                    }
+                });
             }
-            dbConn.query('SELECT id FROM users where ? AND ?', [{ email: email }, { token: token }], function (error, results, fields) {
-                if (error) {
-                    return res.status(401).send({ error: true, message: error.message });
-                }
-                if (!results[0]) {
-                    return res.status(401).send({ error: true, message: "unauthorized" });
-                }
-                next();
-            });
         } else {
             res.status(401).send("unauthorized");
         }
