@@ -56,6 +56,9 @@ import { ToastrModule } from 'ngx-toastr';
 // spinner
 import { NgxSpinnerModule } from "ngx-spinner";
 
+// http
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from "../app/core/interceptor.service";
 
 @NgModule({
   imports: [
@@ -75,7 +78,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     IconSetModule.forRoot(),
     SocialLoginModule,
     ToastrModule.forRoot(),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    HttpClientModule,
   ],
   declarations: [
     AppComponent,
@@ -89,6 +93,11 @@ import { NgxSpinnerModule } from "ngx-spinner";
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
     },
     {
       provide: 'SocialAuthServiceConfig',

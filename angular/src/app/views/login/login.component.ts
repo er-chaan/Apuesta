@@ -5,6 +5,7 @@ import { GoogleLoginProvider } from "angularx-social-login";
 import { SocialUser } from "angularx-social-login";
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
+import { ApiService } from "../../core/api.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ export class LoginComponent {
   user: SocialUser;
   loggedIn: boolean;
 
-  constructor(private spinner: NgxSpinnerService, private toastr: ToastrService, private router: Router, private authService: SocialAuthService) { }
+  constructor(private api: ApiService, private spinner: NgxSpinnerService, private toastr: ToastrService, private router: Router, private authService: SocialAuthService) { }
 
   ngOnInit() {
     if (sessionStorage.getItem("token")) {
@@ -30,15 +31,31 @@ export class LoginComponent {
   signInWithGoogle(): void {
     this.spinner.show();
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x) => {
-      sessionStorage.setItem("token", this.user.authToken);
-      sessionStorage.setItem("user", JSON.stringify(this.user));
-      this.spinner.hide();
-      this.router.navigate(["/"]);
-    }).catch((x)=>{
+      this.auth();
+    }).catch((x) => {
       this.spinner.hide();
       this.toastr.error('API Error');
     });
 
+  }
+
+  auth() {
+    this.api.auth(this.user).subscribe(
+      (response) => {
+        if (response.status) {
+          sessionStorage.setItem("token", response.data.authToken);
+          sessionStorage.setItem("user", JSON.stringify(response.data));
+          this.router.navigate(["/"]);
+        }
+        else {
+          this.toastr.error(response.error, 'API Error');
+        }
+        this.spinner.hide();
+      },
+      (error) => {
+        this.spinner.hide();
+      },
+    )
   }
 
   signOut(): void {
