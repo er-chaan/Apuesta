@@ -59,6 +59,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 // http
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from "../app/core/interceptor.service";
+import { LandingComponent } from './views/landing/landing.component';
 
 @NgModule({
   imports: [
@@ -87,7 +88,8 @@ import { InterceptorService } from "../app/core/interceptor.service";
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LandingComponent
   ],
   providers: [
     {

@@ -12,11 +12,14 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
-  date = new Date();
+  public now: Date = new Date();
 
   userObj: any;
   constructor(private router: Router, private authService: SocialAuthService) {
     this.userObj = JSON.parse(sessionStorage.getItem("user"));
+    setInterval(() => {
+      this.now = new Date();
+    }, 1);
   }
 
   toggleMinimize(e) {
@@ -25,7 +28,8 @@ export class DefaultLayoutComponent {
 
   signOut(): void {
     sessionStorage.clear();
-    this.router.navigate(["/login"]);
+    this.router.navigate(["/"]);
+    this.authService.signOut();
     // this.authService.signOut().then(()=>{
     // sessionStorage.clear();
     // this.router.navigate(["/"]);

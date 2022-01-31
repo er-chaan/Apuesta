@@ -1,4 +1,23 @@
-import { Component } from '@angular/core';
+// import { Component, OnInit } from '@angular/core';
+
+// @Component({
+//   selector: 'app-landing',
+//   templateUrl: './landing.component.html',
+//   styleUrls: ['./landing.component.scss']
+// })
+// export class LandingComponent implements OnInit {
+
+//   constructor() { }
+
+//   ngOnInit(): void {
+//   }
+
+// }
+
+
+
+
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocialAuthService } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
@@ -8,10 +27,11 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { ApiService } from "../../core/api.service";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: 'login.component.html'
+  selector: 'app-landing',
+  templateUrl: './landing.component.html',
+  styleUrls: ['./landing.component.scss']
 })
-export class LoginComponent {
+export class LandingComponent implements OnInit {
   user: SocialUser;
   loggedIn: boolean;
 

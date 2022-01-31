@@ -7,15 +7,22 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
+import { LandingComponent } from './views/landing/landing.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'landing',
     pathMatch: 'full',
-    // canActivate:[AuthGuard]
+  },
+  {
+    path: 'landing',
+    component: LandingComponent,
+    data: {
+      title: 'Landing Page'
+    }
   },
   {
     path: '404',
