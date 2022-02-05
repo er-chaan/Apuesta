@@ -7,7 +7,15 @@ import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './default-layout.component.html'
+  templateUrl: './default-layout.component.html',
+  styles: [
+    `
+    .xxx {
+      display:none
+    }
+    
+    `
+  ]
 })
 export class DefaultLayoutComponent {
   public sidebarMinimized = false;
