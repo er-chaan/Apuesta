@@ -4,6 +4,17 @@ var dbConn = require('../db');
 
 
 router.post('/', function (req, res) {
+  // check active start
+  dbConn.query("SELECT * FROM users WHERE email=? AND status='inactive'", req.body.email, function (error, results) {
+    if (error) {
+      return res.status(200).send({ status: false, error: error.sqlMessage });
+    } else {
+      if (results.length) {
+        return res.status(200).send({ status: false, error: "Account Inactive" });
+      } 
+    }
+  });
+  // check active ends
   dbConn.query("SELECT * FROM users WHERE email=?", req.body.email, function (error, results) {
     if (error) {
       return res.status(200).send({ status: false, error: error.sqlMessage });

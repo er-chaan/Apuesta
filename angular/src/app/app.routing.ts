@@ -60,6 +60,10 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'support',
+        loadChildren: () => import('./views/support/support.module').then(m => m.SupportModule)
+      },
+      {
         path: 'base',
         loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
       },
