@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { navItems } from '../../_nav';
+import { navItems, navItemsAdmin, navItemsUser } from '../../_nav';
 import { SocialAuthService } from "angularx-social-login";
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -21,11 +21,18 @@ import { ApiService } from '../../core/api.service';
 export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
+  public navItemsAdmin = navItemsAdmin;
+  public navItemsUser = navItemsUser;
   public now: Date = new Date();
 
   userObj: any;
   constructor(private spinner: NgxSpinnerService, private toastr: ToastrService, private api: ApiService, private router: Router, private authService: SocialAuthService) {
     this.userObj = JSON.parse(sessionStorage.getItem("user"));
+    if(this.userObj.email == "er.chandreshbhai@gmail.com"){
+      this.navItems = navItemsAdmin
+    }else{
+      this.navItems = navItemsUser
+    }
     setInterval(() => {
       this.now = new Date();
     }, 1);

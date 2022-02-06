@@ -254,3 +254,86 @@ export const navItems: INavData[] = [
   //   attributes: { target: '_blank', rel: 'noopener' }
   // }
 ];
+
+export const navItemsAdmin: INavData[] = [
+  {
+    name: 'Dashboard',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Users',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Statement',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Wallet',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Bank',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'JoloSoft',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Support',
+    url: '/support',
+    icon: 'icon-star',
+  },
+  // open banking api + india
+  {
+    divider: true
+  },
+];
+
+export const navItemsUser: INavData[] = [
+  // {
+  //   name: 'Dashboard',
+  //   url: '/dashboard',
+  //   icon: 'icon-speedometer',
+  //   badge: {
+  //     variant: 'info',
+  //     text: 'NEW'
+  //   }
+  // },
+  {
+    name: 'Dashboard',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Statement',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Wallet',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Bank',
+    url: '/dashboard',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Support',
+    url: '/support',
+    icon: 'icon-star',
+  },
+  // open banking api + india
+  {
+    divider: true
+  },
+];
