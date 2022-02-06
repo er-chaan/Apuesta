@@ -16,5 +16,8 @@ export class ApiService {
   auth(data:any){
     return this.httpClient.post<any>(this.api+"/auth",data);
   }
+  logout(){
+    return this.httpClient.get<any>(this.api+"/user/logout");
+  }
 
 }

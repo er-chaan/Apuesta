@@ -4,6 +4,7 @@ import { SocialAuthService } from "angularx-social-login";
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
+import { ApiService } from '../../core/api.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +24,7 @@ export class DefaultLayoutComponent {
   public now: Date = new Date();
 
   userObj: any;
-  constructor(private router: Router, private authService: SocialAuthService) {
+  constructor(private spinner: NgxSpinnerService, private toastr: ToastrService, private api: ApiService, private router: Router, private authService: SocialAuthService) {
     this.userObj = JSON.parse(sessionStorage.getItem("user"));
     setInterval(() => {
       this.now = new Date();
@@ -35,13 +36,27 @@ export class DefaultLayoutComponent {
   }
 
   signOut(): void {
-    sessionStorage.clear();
-    this.router.navigate(["/"]);
-    this.authService.signOut();
     // this.authService.signOut().then(()=>{
     // sessionStorage.clear();
     // this.router.navigate(["/"]);
     // });
+    this.api.logout().subscribe(
+      (response) => {
+        if (response.status) {
+          sessionStorage.clear();
+          this.router.navigate(["/"]);
+          this.authService.signOut();
+        }
+        else {
+          this.toastr.error(response.error, 'API Error');
+        }
+        this.spinner.hide();
+      },
+      (error) => {
+        this.toastr.error('API Error');
+        this.spinner.hide();
+      },
+    )
   }
 
 }
