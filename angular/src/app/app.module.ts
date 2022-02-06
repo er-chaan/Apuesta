@@ -43,6 +43,13 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 
+// google login
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  // FacebookLoginProvider
+} from 'angularx-social-login';
+
 // toaster
 import { ToastrModule } from 'ngx-toastr';
 
@@ -69,6 +76,7 @@ import { InterceptorService } from "../app/core/interceptor.service";
     ChartsModule,
     IconModule,
     IconSetModule.forRoot(),
+    SocialLoginModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
     HttpClientModule,
@@ -90,6 +98,20 @@ import { InterceptorService } from "../app/core/interceptor.service";
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '831612447328-o4jk13j8kk0jvlfog5pqgk94km5kn112.apps.googleusercontent.com'
+            )
+          },
+        ]
+      } as SocialAuthServiceConfig,
     }
   ],
   bootstrap: [AppComponent]

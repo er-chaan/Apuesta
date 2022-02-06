@@ -15,23 +15,23 @@ import {
   imports: [
     CommonModule,
     LandingRoutingModule,
-    SocialLoginModule,
+    // SocialLoginModule,
   ],
   providers:[
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '831612447328-o4jk13j8kk0jvlfog5pqgk94km5kn112.apps.googleusercontent.com'
-            )
-          },
-        ]
-      } as SocialAuthServiceConfig,
-    }
+    // {
+    //   provide: 'SocialAuthServiceConfig',
+    //   useValue: {
+    //     autoLogin: false,
+    //     providers: [
+    //       {
+    //         id: GoogleLoginProvider.PROVIDER_ID,
+    //         provider: new GoogleLoginProvider(
+    //           '831612447328-o4jk13j8kk0jvlfog5pqgk94km5kn112.apps.googleusercontent.com'
+    //         )
+    //       },
+    //     ]
+    //   } as SocialAuthServiceConfig,
+    // }
   ]
 })
 export class LandingModule { }

@@ -72,9 +72,6 @@ var adminMiddleware = function (req, res, next) {
 // ends
 
 
-var indexRouter = require('./routes/index');
-var authRouter = require('./routes/auth');
-var userRouter = require('./routes/user');
 
 var app = express();
 
@@ -85,9 +82,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
+var indexRouter = require('./routes/index');
+var authRouter = require('./routes/auth');
+var userRouter = require('./routes/user');
+var supportRouter = require('./routes/support');
+
 app.use('/', indexRouter);
 app.use('/auth', openMiddleware, authRouter);
 app.use('/user', closedMiddleware, userRouter);
+app.use('/support', closedMiddleware, supportRouter);
 
 
 

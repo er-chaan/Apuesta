@@ -6,18 +6,22 @@ import { Observable } from "rxjs";
   providedIn: 'root'
 })
 export class ApiService {
-  api:any;
+  api: any;
   constructor(private httpClient: HttpClient) {
     this.api = "http://localhost:3000";
   }
-  // auth(): Observable<any>{
-  //   return this.httpClient.get<any>(this.api+"/auth");
-  // }
-  auth(data:any){
-    return this.httpClient.post<any>(this.api+"/auth",data);
+
+  auth(data: any): Observable<any> {
+    return this.httpClient.post<any>(this.api + "/auth", data);
   }
-  logout(){
-    return this.httpClient.get<any>(this.api+"/user/logout");
+  logout(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/user/logout");
+  }
+  supportPost(data: any): Observable<any> {
+    return this.httpClient.post<any>(this.api + "/support", data);
+  }
+  supportGetByEmail(email: any): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/support/"+email);
   }
 
 }
