@@ -33,6 +33,7 @@ export class DefaultLayoutComponent {
     }else{
       this.navItems = navItemsUser
     }
+    // this.navItems = navItems;
     setInterval(() => {
       this.now = new Date();
     }, 1);

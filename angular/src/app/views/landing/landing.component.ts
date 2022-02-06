@@ -54,7 +54,11 @@ export class LandingComponent implements OnInit {
       this.auth();
     }).catch((x) => {
       this.spinner.hide();
-      this.toastr.error('API Error');
+      if(x.error){
+        this.toastr.error(x.error);
+      }else{
+        this.toastr.error(x+" OR try ctrl + F5");
+      }
     });
 
   }

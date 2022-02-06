@@ -8,7 +8,6 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LandingComponent } from './views/landing/landing.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
@@ -20,10 +19,7 @@ export const routes: Routes = [
   },
   {
     path: 'landing',
-    component: LandingComponent,
-    data: {
-      title: 'Landing Page'
-    }
+    loadChildren: () => import('./views/landing/landing.module').then(m => m.LandingModule)
   },
   {
     path: '404',
@@ -97,13 +93,13 @@ export const routes: Routes = [
         loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
       }
     ],
-    canActivate:[AuthGuard]
+    canActivate: [AuthGuard]
   },
   { path: '**', component: P404Component }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
