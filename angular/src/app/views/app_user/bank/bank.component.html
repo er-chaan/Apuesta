@@ -1,1 +1,58 @@
-<p>bank works!</p>
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" [formGroup]="bankForm" (ngSubmit)="onSubmit()">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Bank</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="hf-email">Mobile Number</label>
+                            <div class="col-md-9">
+                                <input minlength="10" min="1000000000" max="9999999999" formControlName="mobile"
+                                    type="number" id="hf-email" name="hf-email" class="form-control"
+                                    placeholder="Enter Mobile number.." autocomplete="off">
+                                <div *ngIf="f.mobile.touched && f.mobile.invalid" class="errorMsg">
+                                    <div *ngIf="f.mobile.errors.required">Mobile Number is required.</div>
+                                    <div *ngIf="f.mobile.errors.pattern">Enter 10 digit Mobile Number.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="hf-email">Account Number</label>
+                            <div class="col-md-9">
+                                <input minlength="2" min="100" max="9999999999999999999999999"
+                                    formControlName="accountNo" type="number" id="hf-email" name="hf-email"
+                                    class="form-control" placeholder="Enter Account number.." autocomplete="off">
+                                <div *ngIf="f.accountNo.touched && f.accountNo.invalid" class="errorMsg">
+                                    <div *ngIf="f.accountNo.errors.required">Account Number is required.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="hf-password">IFSC Code</label>
+                            <div class="col-md-9">
+                                <input formControlName="ifscCode" type="text" id="hf-password" name="hf-password"
+                                    class="form-control" placeholder="Enter IFSC Code.." autocomplete="off">
+                                <div *ngIf="f.ifscCode.touched && f.ifscCode.invalid" class="errorMsg">
+                                    <div *ngIf="f.ifscCode.errors.required">IFSC Code is required.</div>
+                                    <div *ngIf="f.ifscCode.errors.pattern">Invalid IFSC.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button [disabled]="bankForm.invalid" type="submit" class="btn btn-sm btn-primary">
+                            <i class="fa fa-dot-circle-o"></i>
+                            <span [innerHTML]=" (isUpdateButton ? 'Update' : 'Add')"></span>
+                        </button>
+                        <button *ngIf="isUpdateButton"  (click)="onCancel($event)" class="btn btn-sm btn-danger">
+                            <i class="fa fa-ban"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

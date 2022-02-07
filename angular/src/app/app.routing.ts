@@ -57,6 +57,10 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'bank',
+        loadChildren: () => import('./views/app_user/bank/bank.module').then(m => m.BankModule)
+      },
+      {
         path: 'support',
         loadChildren: () => import('./views/app_user/support/support.module').then(m => m.SupportModule)
       },

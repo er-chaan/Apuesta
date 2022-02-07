@@ -21,7 +21,13 @@ export class ApiService {
     return this.httpClient.post<any>(this.api + "/support", data);
   }
   supportGetByEmail(email: any): Observable<any> {
-    return this.httpClient.get<any>(this.api + "/support/"+email);
+    return this.httpClient.get<any>(this.api + "/support/" + email);
+  }
+  userGetByEmail(email: any): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/user/" + email);
+  }
+  userUpdate(data: any): Observable<any> {
+    return this.httpClient.put<any>(this.api + "/user", data);
   }
 
 }

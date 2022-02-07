@@ -24,7 +24,7 @@ router.post('/', function (req, res) {
                 }
               });
             } else {
-              dbConn.query("INSERT INTO users SET ? ", { email: req.body.email, token: req.body.authToken }, function (error, results, fields) {
+              dbConn.query("INSERT INTO users SET ? ", { name: req.body.name, email: req.body.email, token: req.body.authToken }, function (error, results, fields) {
                 if (error) {
                   return res.status(200).send({ status: false, error: error.sqlMessage });
                 } else {

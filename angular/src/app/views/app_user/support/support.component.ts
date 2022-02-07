@@ -13,8 +13,11 @@ export class SupportComponent implements OnInit {
 
   supportForm: FormGroup;
   userObj: any;
-  constructor(private api: ApiService, private formBuilder: FormBuilder, private spinner: NgxSpinnerService, private toastr: ToastrService) {
-  }
+  constructor(
+    private api: ApiService, 
+    private formBuilder: FormBuilder, 
+    private spinner: NgxSpinnerService, 
+    private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.userObj = JSON.parse(sessionStorage.getItem("user"));

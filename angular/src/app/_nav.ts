@@ -324,7 +324,7 @@ export const navItemsUser: INavData[] = [
   },
   {
     name: 'Bank',
-    url: '/dashboard',
+    url: '/bank',
     icon: 'icon-star',
   },
   {
