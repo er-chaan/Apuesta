@@ -8,7 +8,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="hf-email">Mobile Number</label>
+                            <label class="col-md-3 col-form-label" for="hf-email">Mobile Number *</label>
                             <div class="col-md-9">
                                 <input minlength="10" min="1000000000" max="9999999999" formControlName="mobile"
                                     type="number" id="hf-email" name="hf-email" class="form-control"
@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="hf-email">Account Number</label>
+                            <label class="col-md-3 col-form-label" for="hf-email">Account Number *</label>
                             <div class="col-md-9">
                                 <input minlength="2" min="100" max="9999999999999999999999999"
                                     formControlName="accountNo" type="number" id="hf-email" name="hf-email"
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="hf-password">IFSC Code</label>
+                            <label class="col-md-3 col-form-label" for="hf-password">IFSC Code *</label>
                             <div class="col-md-9">
                                 <input formControlName="ifscCode" type="text" id="hf-password" name="hf-password"
                                     class="form-control" placeholder="Enter IFSC Code.." autocomplete="off">
@@ -47,9 +47,9 @@
                             <i class="fa fa-dot-circle-o"></i>
                             <span [innerHTML]=" (isUpdateButton ? 'Update' : 'Add')"></span>
                         </button>
-                        <button *ngIf="isUpdateButton"  (click)="onCancel($event)" class="btn btn-sm btn-danger">
+                        <label *ngIf="isUpdateButton"  (click)="onCancel()" class="btn btn-sm btn-danger mt8">
                             <i class="fa fa-ban"></i> Cancel
-                        </button>
+                        </label>
                     </div>
                 </div>
             </form>

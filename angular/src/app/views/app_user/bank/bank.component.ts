@@ -83,8 +83,7 @@ export class BankComponent implements OnInit {
     }
   }
 
-  onCancel(e) {
-    e.preventDefault();
+  onCancel() {
     this.bankForm.patchValue({
       mobile: this.userByEmailData.mobile,
       accountNo: this.userByEmailData.accountNo,
