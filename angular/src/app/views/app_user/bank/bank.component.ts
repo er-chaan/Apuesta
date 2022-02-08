@@ -24,6 +24,7 @@ export class BankComponent implements OnInit {
   ngOnInit(): void {
     this.userObj = JSON.parse(sessionStorage.getItem("user"));
     this.bankForm = this.formBuilder.group({
+      isVerified: ['', Validators.required],
       mobile: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       accountNo: ['', Validators.required],
       ifscCode: ['', [Validators.required, Validators.pattern("^\s*([0-9a-zA-Z]+)\s*$")]],
@@ -41,6 +42,7 @@ export class BankComponent implements OnInit {
           this.userByEmailData = response.data;
           if (this.userByEmailData.mobile != 0 && this.userByEmailData.accountNo != 0 && this.userByEmailData.ifscCode != "0") {
             this.bankForm.patchValue({
+              isVerified: this.userByEmailData.isVerified,
               mobile: this.userByEmailData.mobile,
               accountNo: this.userByEmailData.accountNo,
               ifscCode: this.userByEmailData.ifscCode
@@ -62,6 +64,9 @@ export class BankComponent implements OnInit {
     if(this.userByEmailData.mobile == this.bankForm.get("mobile").value && this.userByEmailData.accountNo == this.bankForm.get("accountNo").value && this.userByEmailData.ifscCode == this.bankForm.get("ifscCode").value){
       this.toastr.success('Update Success');
       return
+    }
+    if(this.userByEmailData.accountNo != this.bankForm.get("accountNo").value || this.userByEmailData.ifscCode != this.bankForm.get("ifscCode").value){
+      this.bankForm.get("isVerified").setValue(false);
     }
     if (this.bankForm.valid) {
       this.spinner.show();
