@@ -53,7 +53,7 @@ export class DefaultLayoutComponent {
         if (response.status) {
           sessionStorage.clear();
           this.router.navigate(["/"]);
-          this.authService.signOut();
+          // this.authService.signOut();
         }
         else {
           this.toastr.error(response.error, 'API Error');

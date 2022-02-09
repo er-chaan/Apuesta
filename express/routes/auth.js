@@ -6,6 +6,7 @@ var mail = require('../mail');
 
 
 router.post('/', function (req, res) {
+  req.body.response = "NULL"; 
   // check active start
   dbConn.query("SELECT * FROM users WHERE email=? AND status='inactive'", req.body.email, function (error, results) {
     if (error) {
@@ -14,25 +15,27 @@ router.post('/', function (req, res) {
       if (results.length) {
         return res.status(200).send({ status: false, error: "Account Inactive" });
       } else {
-        dbConn.query("SELECT * FROM users WHERE email=?", req.body.email, function (error, results) {
+        dbConn.query("SELECT * FROM users WHERE email=?", req.body.email, function (error, resultsX) {
           if (error) {
             return res.status(200).send({ status: false, error: error.sqlMessage });
           } else {
-            if (results.length) {
+            if (resultsX.length) {
               dbConn.query("UPDATE users SET ?,? WHERE ? ", [{ isOnline: true }, { token: req.body.authToken }, { email: req.body.email }], function (error, results, fields) {
                 if (error) {
                   return res.status(200).send({ status: false, error: error.sqlMessage });
                 } else {
+                  data = JSON.parse(JSON.stringify(resultsX));
+                  req.body.uid = data[0].id;
                   return res.status(200).send({ status: true, data: req.body });
                 }
               });
             } else {
-              dbConn.query("INSERT INTO users SET ? ", { name: req.body.name, email: req.body.email, token: req.body.authToken }, function (error, results, fields) {
+              dbConn.query("INSERT INTO users SET ? ", { wallet: 50, name: req.body.name, email: req.body.email, token: req.body.authToken }, function (error, results, fields) {
                 if (error) {
                   return res.status(200).send({ status: false, error: error.sqlMessage });
                 } else {
                   // mail();
-                  createTransationTable(req.body, results.insertId, res);
+                  generateTransaction(req.body, results.insertId, res);
                 }
               });
             }
@@ -44,29 +47,30 @@ router.post('/', function (req, res) {
   // check active ends
 });
 
-function createTransationTable(data, id, res) {
-  scripts = `
-  CREATE TABLE transactions_${id} (
-    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    mode enum('credit','debit') DEFAULT NULL,
-    amount float NOT NULL DEFAULT '0',
-    description text NOT NULL,
-    updatedAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    status enum('success','failed') NOT NULL DEFAULT 'success'
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-  `;
-  // console.log("INSERT INTO transactions(mode, amount, description, status) VALUES('credit', -50, 'Welcome Bonus Uid : ', 'success');")
-  scripts += `INSERT INTO Apuesta.transactions(mode, amount, description) VALUES('credit', -50, 'Welcome Bonus Uid : ');`;
+function generateTransaction(data, id, res) {
+  scripts = `INSERT INTO transactions(uid, mode, amount, description) VALUES(${id},'debit', -50, 'Welcome Bonus To : ${data.email}');`;
   dbConn.query(scripts, null, function (error, results, fields) {
     if (error) {
       console.log(error.sqlMessage);
       dbConn.query("DELETE FROM users WHERE id=" + id + "");
       return res.status(200).send({ status: false, error: error.sqlMessage });
     } else {
-      return res.status(200).send({ status: true, data: data });
+      scripts = `INSERT INTO transactions_users(uid, mode, amount, description) VALUES(${id},'credit', +50, 'Welcome Bonus');`;
+      dbConn.query(scripts, null, function (error) {
+        if (error) {
+          console.log(error.sqlMessage);
+          dbConn.query("DELETE FROM users WHERE id=" + id + "");
+          dbConn.query("DELETE FROM transactions WHERE id=" + results.insertId + "");
+          return res.status(200).send({ status: false, error: error.sqlMessage });
+        } else {
+          data.uid = id;
+          return res.status(200).send({ status: true, data: data });
+        }
+      });
     }
   });
 }
+
 function mail() {
   // var mailOptions = {
   //   from: config.email,

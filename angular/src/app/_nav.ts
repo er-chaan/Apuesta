@@ -313,23 +313,23 @@ export const navItemsUser: INavData[] = [
     icon: 'icon-star',
   },
   {
-    name: 'Wallet',
-    url: '/dashboard',
-    icon: 'icon-star',
-  },
-  {
     name: 'Bets',
     url: '/dashboard',
     icon: 'icon-star',
   },
   {
-    name: 'Transactions',
+    name: 'Wallet',
     url: '/dashboard',
     icon: 'icon-star',
   },
   {
     name: 'Bank',
     url: '/bank',
+    icon: 'icon-star',
+  },
+  {
+    name: 'Transactions',
+    url: '/transactions',
     icon: 'icon-star',
   },
   {
