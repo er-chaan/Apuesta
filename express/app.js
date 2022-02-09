@@ -86,11 +86,13 @@ var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var userRouter = require('./routes/user');
 var supportRouter = require('./routes/support');
+var transactionsRouter = require('./routes/transactions');
 
 app.use('/', indexRouter);
 app.use('/auth', openMiddleware, authRouter);
 app.use('/user', closedMiddleware, userRouter);
 app.use('/support', closedMiddleware, supportRouter);
+app.use('/transactions', closedMiddleware, transactionsRouter);
 
 
 

@@ -29,5 +29,8 @@ export class ApiService {
   userUpdate(data: any): Observable<any> {
     return this.httpClient.put<any>(this.api + "/user", data);
   }
+  transactionsGetByUid(uid: any): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/transactions/" + uid);
+  }
 
 }
