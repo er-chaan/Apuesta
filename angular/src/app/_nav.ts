@@ -190,11 +190,6 @@ export const navItems: INavData[] = [
     }
   },
   {
-    name: 'Wallet',
-    url: '/wallet',
-    icon: 'icon-star',
-  },
-  {
     divider: true
   },
   // {
@@ -289,7 +284,7 @@ export const navItemsAdmin: INavData[] = [
   {
     name: 'Support',
     url: '/support',
-    icon: 'icon-star',
+    icon: 'icon-envelope',
   },
   // open banking api + india
   {
@@ -308,34 +303,34 @@ export const navItemsUser: INavData[] = [
   //   }
   // },
   {
-    name: 'Dashboard',
+    name: 'Play Area',
     url: '/dashboard',
-    icon: 'icon-star',
+    icon: 'icon-trophy',
   },
   {
     name: 'Bets',
     url: '/dashboard',
-    icon: 'icon-star',
+    icon: 'icon-briefcase',
   },
   {
     name: 'Wallet',
-    url: '/dashboard',
-    icon: 'icon-star',
+    url: '/wallet',
+    icon: 'icon-wallet',
   },
   {
     name: 'Bank',
     url: '/bank',
-    icon: 'icon-star',
+    icon: 'icon-credit-card',
   },
   {
     name: 'Transactions',
     url: '/transactions',
-    icon: 'icon-star',
+    icon: 'icon-notebook',
   },
   {
     name: 'Support',
     url: '/support',
-    icon: 'icon-star',
+    icon: 'icon-envelope',
   },
   // open banking api + india
   {
