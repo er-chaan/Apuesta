@@ -12,6 +12,8 @@ export class TransactionsComponent implements OnInit {
 
   userObj: any;
   transactionsByIdData: any = [];
+  // dtOptions: any = {};
+  dtOptions: DataTables.Settings = {};
 
   constructor(
     private api: ApiService,
@@ -24,10 +26,19 @@ export class TransactionsComponent implements OnInit {
   }
 
   getTransactionsById() {
+    this.dtOptions = {};
+    this.transactionsByIdData = [];
+
     this.spinner.show();
     this.api.transactionsGetByUid(this.userObj.uid).subscribe(
       (response) => {
         if (response.status) {
+          this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 5,
+            lengthMenu: [5, 10, 25],
+            processing: true
+          };
           this.transactionsByIdData = response.data;
         }
         else {

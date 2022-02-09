@@ -4,17 +4,21 @@ import { CommonModule } from '@angular/common';
 // form
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+import { DataTablesModule } from "angular-datatables";
+
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DataTablesModule
   ],
   exports:[
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DataTablesModule
   ]
 })
 export class SharedModule { }
