@@ -303,7 +303,7 @@ export const navItemsUser: INavData[] = [
   //   }
   // },
   {
-    name: 'Play Area',
+    name: 'Playing',
     url: '/dashboard',
     icon: 'icon-trophy',
   },

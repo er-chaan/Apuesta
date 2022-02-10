@@ -20,7 +20,7 @@ router.post('/', function (req, res) {
             return res.status(200).send({ status: false, error: error.sqlMessage });
           } else {
             if (resultsX.length) {
-              dbConn.query("UPDATE users SET ?,? WHERE ? ", [{ isOnline: true }, { token: req.body.authToken }, { email: req.body.email }], function (error, results, fields) {
+              dbConn.query("UPDATE users SET visits=visits+1,?,? WHERE ? ", [{ isOnline: true }, { token: req.body.authToken }, { email: req.body.email }], function (error, results, fields) {
                 if (error) {
                   return res.status(200).send({ status: false, error: error.sqlMessage });
                 } else {

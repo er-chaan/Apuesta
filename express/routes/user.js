@@ -43,12 +43,14 @@ router.put('', function (req, res) {
           return res.status(200).send({ status: false, error: response.error });
         } else if (response.status == "SUCCESS") {
           req.body.isVerified = true;
+          req.body.actualname = response.actualname;
           dbConn.query("UPDATE users SET ? WHERE email='" + req.headers.email + "' ", [
             req.body
           ], function (error, results, fields) {
             if (error) {
               return res.status(200).send({ status: false, error: error.sqlMessage });
             } else {
+              req.body.actualname = response.actualname;
               return res.status(200).send({ status: true, data: req.body });
             }
           });
