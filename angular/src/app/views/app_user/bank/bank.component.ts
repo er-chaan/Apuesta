@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../core/api.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-bank',
@@ -13,12 +14,16 @@ export class BankComponent implements OnInit {
 
   bankForm: FormGroup;
   userObj: any;
+  modalRef: BsModalRef;
+
 
   constructor(
     private api: ApiService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private modalService: BsModalService
+    ) { }
 
 
   ngOnInit(): void {
@@ -60,7 +65,13 @@ export class BankComponent implements OnInit {
   get f() {
     return this.bankForm.controls;
   }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
   onSubmit() {
+    this.modalService.hide();
     if(this.userByEmailData.mobile == this.bankForm.get("mobile").value && this.userByEmailData.accountNo == this.bankForm.get("accountNo").value && this.userByEmailData.ifscCode == this.bankForm.get("ifscCode").value){
       this.toastr.success('Update Success');
       return

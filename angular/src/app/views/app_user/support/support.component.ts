@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../core/api.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-support',
@@ -13,11 +14,19 @@ export class SupportComponent implements OnInit {
 
   supportForm: FormGroup;
   userObj: any;
+  modalRef: BsModalRef;
+
   constructor(
-    private api: ApiService, 
-    private formBuilder: FormBuilder, 
-    private spinner: NgxSpinnerService, 
-    private toastr: ToastrService) {}
+    private api: ApiService,
+    private formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService,
+    private modalService: BsModalService
+  ) { }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 
   ngOnInit(): void {
     this.userObj = JSON.parse(sessionStorage.getItem("user"));
@@ -65,6 +74,7 @@ export class SupportComponent implements OnInit {
   }
 
   onSubmit() {
+    this.modalService.hide();
     if (this.supportForm.valid) {
       if (this.supportForm.get("issue").value == 0 || this.supportForm.get("issue").value == "0") {
         this.toastr.error("Select Issue");

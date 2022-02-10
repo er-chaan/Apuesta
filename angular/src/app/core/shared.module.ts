@@ -4,21 +4,21 @@ import { CommonModule } from '@angular/common';
 // form
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+// data table
 import { DataTablesModule } from "angular-datatables";
+
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DataTablesModule
+    ModalModule.forRoot()
   ],
-  exports:[
+  exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    DataTablesModule
+    DataTablesModule,
   ]
 })
 export class SharedModule { }
