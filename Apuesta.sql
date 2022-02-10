@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 09, 2022 at 01:19 AM
+-- Generation Time: Feb 10, 2022 at 01:29 PM
 -- Server version: 8.0.27-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -46,10 +46,20 @@ CREATE TABLE `support` (
   `email` text NOT NULL,
   `issue` text NOT NULL,
   `description` text NOT NULL,
+  `resolution` varchar(1000) NOT NULL DEFAULT 'In Progress',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` enum('active','inactive') NOT NULL DEFAULT 'active'
+  `status` enum('pending','resolved') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `support`
+--
+
+INSERT INTO `support` (`id`, `email`, `issue`, `description`, `resolution`, `createdAt`, `status`) VALUES
+(16, 'alone8street@gmail.com', 'Bet', 'drsgvdf', 'procedure explained', '2022-02-10 07:53:42', 'resolved'),
+(17, 'alone8street@gmail.com', 'Bet', 'dfvdf', 'In Progress', '2022-02-10 07:53:48', 'pending'),
+(18, 'alone8street@gmail.com', 'Bet', 'dfbvdf', 'In Progress', '2022-02-10 07:55:52', 'pending');
 
 -- --------------------------------------------------------
 
@@ -59,12 +69,44 @@ CREATE TABLE `support` (
 
 CREATE TABLE `transactions` (
   `id` int NOT NULL,
+  `uid` int NOT NULL,
   `mode` enum('credit','debit') DEFAULT NULL,
   `amount` float NOT NULL DEFAULT '0',
   `description` text NOT NULL,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('success','failed') NOT NULL DEFAULT 'success'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `uid`, `mode`, `amount`, `description`, `status`) VALUES
+(5, 75, 'debit', -50, 'Welcome Bonus To : alone8street@gmail.com', 'success');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions_users`
+--
+
+CREATE TABLE `transactions_users` (
+  `id` int NOT NULL,
+  `uid` int NOT NULL,
+  `mode` enum('credit','debit') DEFAULT NULL,
+  `amount` float NOT NULL DEFAULT '0',
+  `description` text NOT NULL,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` enum('success','failed') NOT NULL DEFAULT 'success'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `transactions_users`
+--
+
+INSERT INTO `transactions_users` (`id`, `uid`, `mode`, `amount`, `description`, `status`) VALUES
+(10, 75, 'credit', 50, 'Welcome Bonus', 'success'),
+(12, 75, 'credit', 34, 'fhbfgth', 'success');
 
 -- --------------------------------------------------------
 
@@ -86,6 +128,13 @@ CREATE TABLE `users` (
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('active','inactive') NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `mobile`, `email`, `token`, `wallet`, `accountNo`, `ifscCode`, `isOnline`, `isVerified`, `status`) VALUES
+(75, 'Er Chaan', '0', 'alone8street@gmail.com', 'ya29.A0ARrdaM-pzBGK81e_uLnPJZGJu87wc-rkP-qgBDBOMA0A6T8tEpTcIVvgIaBUQl7kNHzesCA9xZUtgnRxTBbyNEl7eVj2GoKrfZegfzh0viqQOvLoO4ChYccvYuGvrjdDahVzGea8Q67Oh2VS1pKsqRMgeTW-xg', 50, 0, '0', 1, 0, 'active');
 
 --
 -- Indexes for dumped tables
@@ -110,6 +159,12 @@ ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `transactions_users`
+--
+ALTER TABLE `transactions_users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -129,7 +184,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `support`
 --
 ALTER TABLE `support`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `transactions`
@@ -138,10 +193,16 @@ ALTER TABLE `transactions`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `transactions_users`
+--
+ALTER TABLE `transactions_users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

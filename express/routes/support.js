@@ -3,7 +3,7 @@ var router = express.Router();
 var dbConn = require('../db');
 
 router.get('/:email', function (req, res) {
-    dbConn.query("SELECT * FROM support WHERE ? AND status='active' ORDER BY id DESC", [{ email: req.params.email }], function (error, results) {
+    dbConn.query("SELECT * FROM support WHERE ? ORDER BY id DESC", [{ email: req.params.email }], function (error, results) {
         if (error) {
             return res.status(200).send({ status: false, error: error.sqlMessage });
         } else {
@@ -14,7 +14,7 @@ router.get('/:email', function (req, res) {
 
 router.post('/', function (req, res) {
 
-    dbConn.query("SELECT * FROM support WHERE ? AND ? AND status='active' ORDER BY id DESC", [{ email: req.body.email }, { issue: req.body.issue }], function (error, results) {
+    dbConn.query("SELECT * FROM support WHERE ? AND ? AND status='pending' ORDER BY id DESC", [{ email: req.body.email }, { issue: req.body.issue }], function (error, results) {
         if (error) {
             return res.status(200).send({ status: false, error: error.sqlMessage });
         } else {
