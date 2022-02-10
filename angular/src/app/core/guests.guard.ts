@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad {
+export class GuestsGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad {
 
   constructor(private router: Router) { }
 
@@ -13,15 +13,9 @@ export class AdminGuard implements CanActivate, CanActivateChild, CanDeactivate<
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (sessionStorage.getItem("token")) {
-      let userObj: any;
-      userObj = JSON.parse(sessionStorage.getItem("user"));
-      if (userObj.email == "er.chandreshbhai@gmail.com") {
-        return true;
-      } else {
-        this.router.navigate(["/landing"]);
-      }
-    } else {
       this.router.navigate(["/landing"]);
+    } else {
+      return true;
     }
   }
   canActivateChild(

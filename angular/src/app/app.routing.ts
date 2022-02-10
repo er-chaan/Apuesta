@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '../app/core/auth.guard';
 import { AdminGuard } from '../app/core/admin.guard';
+import { UsersGuard } from '../app/core/users.guard';
+import { GuestsGuard } from '../app/core/guests.guard';
 
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
@@ -19,7 +20,8 @@ export const routes: Routes = [
   },
   {
     path: 'landing',
-    loadChildren: () => import('./views/landing/landing.module').then(m => m.LandingModule)
+    loadChildren: () => import('./views/landing/landing.module').then(m => m.LandingModule),
+    // canActivate: [GuestsGuard]
   },
   {
     path: '404',
@@ -47,7 +49,7 @@ export const routes: Routes = [
     component: RegisterComponent,
     data: {
       title: 'Register Page'
-    }
+    },
   },
   {
     path: '',
@@ -105,7 +107,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
       }
     ],
-    canActivate: [AuthGuard]
+    canActivate: [UsersGuard]
   },
   { path: '**', component: P404Component }
 ];

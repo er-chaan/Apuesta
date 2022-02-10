@@ -32,5 +32,8 @@ export class ApiService {
   transactionsGetByUid(uid: any): Observable<any> {
     return this.httpClient.get<any>(this.api + "/transactions/" + uid);
   }
+  notificationsGet(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/notifications");
+  }
 
 }

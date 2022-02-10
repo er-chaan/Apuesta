@@ -1,7 +1,7 @@
 <app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true"
   [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'CoreUI Logo'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
-  [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'" >
+  [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3">
       <!-- <a class="nav-link" href="#">Dashboard</a> -->
@@ -86,7 +86,7 @@
   </main>
   <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
     <tabset>
-      <tab>
+      <!-- <tab>
         <ng-template tabHeading><i class="icon-list"></i></ng-template>
         <div class="list-group list-group-accent">
           <div
@@ -186,11 +186,30 @@
             </div>
           </div>
         </div>
-      </tab>
+      </tab> -->
       <tab>
-        <ng-template tabHeading><i class="icon-speech"></i></ng-template>
+        <ng-template tabHeading>
+          <!-- <i class="icon-speech"></i>  -->
+          <span>Notifications</span>
+        </ng-template>
         <div class="p-3">
-          <div class="message">
+          <div *ngIf="!notificationsData.length">
+            No Data
+          </div>
+          <div *ngFor="let x of notificationsData">
+            <div class="message">
+              <div>
+                <small class="text-muted float-right mt-1">{{x.updatedAt | date:'medium' }}</small>
+              </div>
+              <br>
+              <div class="font-weight-bold">{{x.title}}</div>
+              <!-- <br> -->
+              <small class="text-muted">{{x.description}}</small>
+            </div>
+            <hr>
+          </div>
+
+          <!-- <div class="message">
             <div class="py-3 pb-5 mr-3 float-left">
               <div class="avatar">
                 <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
@@ -252,26 +271,10 @@
             <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
             <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
               incididunt...</small>
-          </div>
-          <hr>
-          <div class="message">
-            <div class="py-3 pb-5 mr-3 float-left">
-              <div class="avatar">
-                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                <span class="avatar-status badge-success"></span>
-              </div>
-            </div>
-            <div>
-              <small class="text-muted">Lukasz Holeczek</small>
-              <small class="text-muted float-right mt-1">1:52 PM</small>
-            </div>
-            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt...</small>
-          </div>
+          </div> -->
         </div>
       </tab>
-      <tab>
+      <!-- <tab>
         <ng-template tabHeading><i class="icon-settings"></i></ng-template>
         <div class="p-3">
           <h6>Settings</h6>
@@ -347,7 +350,7 @@
           </div>
           <small class="text-muted">25GB/256GB</small>
         </div>
-      </tab>
+      </tab> -->
     </tabset>
   </app-aside>
 </div>

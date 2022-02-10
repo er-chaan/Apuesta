@@ -55,7 +55,7 @@ export class InterceptorService implements HttpInterceptor {
           this.toastr.error(error.message, 'API Error');
           if (error.status == 401) {
             sessionStorage.clear();
-            this.router.navigate(['/']);
+            this.router.navigate(['/landing']);
             this.toastr.error('intrusion detected', 'ALERT');
           }
         }
