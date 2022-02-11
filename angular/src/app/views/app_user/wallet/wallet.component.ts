@@ -71,8 +71,40 @@ export class WalletComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.cashOut) {
+      this.cashOutSubmit();
+    }
+    if (this.cashIn) {
+      this.cashInSubmit();
+    }
+  }
+
+  cashInSubmit() {
     this.spinner.show();
-    let data:any = {
+    let data: any = {
+      uid: this.userObj.uid,
+      amount: this.amount
+    };
+    this.api.cashIn(data).subscribe(
+      (response) => {
+        if (response.status) {
+          // this.userByEmailData = response.data;
+          console.log(response);
+          this.toastr.success('Success');
+          this.getUserByEmail();
+          this.modalService.hide();
+        }
+        else {
+          this.toastr.error(response.error, 'API Error');
+        }
+        this.spinner.hide();
+      }
+    );
+  }
+
+  cashOutSubmit() {
+    this.spinner.show();
+    let data: any = {
       uid: this.userObj.uid,
       amount: this.amount
     };
@@ -90,7 +122,9 @@ export class WalletComponent implements OnInit {
         }
         this.spinner.hide();
       }
-    )
+    );
   }
+
+
 
 }

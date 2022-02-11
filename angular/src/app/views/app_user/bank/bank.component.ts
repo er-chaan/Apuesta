@@ -73,7 +73,7 @@ export class BankComponent implements OnInit {
   onSubmit() {
     this.modalService.hide();
     if(this.userByEmailData.mobile == this.bankForm.get("mobile").value && this.userByEmailData.accountNo == this.bankForm.get("accountNo").value && this.userByEmailData.ifscCode == this.bankForm.get("ifscCode").value){
-      this.toastr.success('Update Success');
+      this.toastr.info('Already updated');
       return
     }
     if(this.userByEmailData.accountNo != this.bankForm.get("accountNo").value || this.userByEmailData.ifscCode != this.bankForm.get("ifscCode").value){
