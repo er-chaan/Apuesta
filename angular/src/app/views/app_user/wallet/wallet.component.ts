@@ -48,7 +48,7 @@ export class WalletComponent implements OnInit {
   cashOut: boolean = false;
 
   walletOperation(action, template: TemplateRef<any>) {
-    this.amount = 10;
+    this.amount = 100;
     this.cashIn = false;
     this.cashOut = false;
     if (action == "cashIn") {
@@ -71,7 +71,26 @@ export class WalletComponent implements OnInit {
   }
 
   onSubmit() {
-
+    this.spinner.show();
+    let data:any = {
+      uid: this.userObj.uid,
+      amount: this.amount
+    };
+    this.api.cashOut(data).subscribe(
+      (response) => {
+        if (response.status) {
+          // this.userByEmailData = response.data;
+          console.log(response);
+          this.toastr.success('Success');
+          this.getUserByEmail();
+          this.modalService.hide();
+        }
+        else {
+          this.toastr.error(response.error, 'API Error');
+        }
+        this.spinner.hide();
+      }
+    )
   }
 
 }

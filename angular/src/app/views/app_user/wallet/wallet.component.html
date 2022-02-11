@@ -24,14 +24,14 @@
                         <div class="col-lg-6 btn-lg">
                             <div class="text-center">
                                 <button (click)="walletOperation('cashIn',template)" type="button"
-                                    class="btn btn-lg btn-warning">CASH IN</button>
+                                    class="btn btn-lg btn-warning">Deposit</button>
                             </div>
                         </div>
                         <div class="col-lg-6 btn-lg">
                             <div class="text-center" style="height: 95px;">
                                 <button [disabled]="!userByEmailData.isVerified"
                                     (click)="walletOperation('cashOut',template)" type="button"
-                                    class="btn btn-lg btn-warning">CASH OUT</button>
+                                    class="btn btn-lg btn-warning">Withdraw</button>
                                 <br>
                                 <div *ngIf="!userByEmailData.isVerified">
                                     <small>

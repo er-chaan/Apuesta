@@ -86,6 +86,7 @@ var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var notificationsRouter = require('./routes/notifications');
 var userRouter = require('./routes/user');
+var walletRouter = require('./routes/wallet');
 var supportRouter = require('./routes/support');
 var transactionsRouter = require('./routes/transactions');
 
@@ -93,6 +94,7 @@ app.use('/', indexRouter);
 app.use('/auth', openMiddleware, authRouter);
 app.use('/notifications', closedMiddleware, notificationsRouter);
 app.use('/user', closedMiddleware, userRouter);
+app.use('/wallet', closedMiddleware, walletRouter);
 app.use('/support', closedMiddleware, supportRouter);
 app.use('/transactions', closedMiddleware, transactionsRouter);
 

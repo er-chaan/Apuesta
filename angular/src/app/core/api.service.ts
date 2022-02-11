@@ -35,5 +35,8 @@ export class ApiService {
   notificationsGet(): Observable<any> {
     return this.httpClient.get<any>(this.api + "/notifications");
   }
+  cashOut(data: any): Observable<any> {
+    return this.httpClient.post<any>(this.api + "/wallet/cashout", data);
+  }
 
 }

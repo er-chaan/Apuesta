@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var dbConn = require('../db');
 var joloSoft = require('./joloSoft');
-const { response } = require('express');
 
 router.get('/logout', function (req, res) {
   dbConn.query("UPDATE users SET ?,? WHERE ?", [{ token: 'x' }, { isOnline: false }, { email: req.headers.email }], function (error, results, fields) {

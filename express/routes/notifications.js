@@ -3,7 +3,7 @@ var router = express.Router();
 var dbConn = require('../db');
 
 router.get('/', function (req, res) {
-    dbConn.query("SELECT * FROM notifications WHERE status='active' ORDER BY id DESC LIMIT 3", null, function (error, results) {
+    dbConn.query("SELECT * FROM notifications WHERE status='active' AND forAdmin=false ORDER BY id DESC LIMIT 3", null, function (error, results) {
         if (error) {
             return res.status(200).send({ status: false, error: error.sqlMessage });
         } else {
