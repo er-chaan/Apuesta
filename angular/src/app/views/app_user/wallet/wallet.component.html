@@ -5,10 +5,10 @@
                 <div class="card-header">
                     <!-- <i class="fa fa-align-justify"></i>  -->
                     <strong>Wallet</strong>
-                    <i class="fa fa-refresh pull-right pointer"></i>
+                    <i class="fa fa-refresh pull-right pointer" (click)="getUserByEmail()"></i>
                 </div>
                 <div class="card-body">
-                    <h1 class="pull-right" style="font-size: 45px;"> 10000 </h1>
+                    <h1 class="pull-right" style="font-size: 85px;"> {{userByEmailData.wallet}} </h1>
                     <div>INR</div>
                 </div>
             </div>
@@ -23,12 +23,23 @@
                     <div class="row">
                         <div class="col-lg-6 btn-lg">
                             <div class="text-center">
-                                <button type="button" class="btn btn-lg btn-warning">CASH IN</button>
+                                <button (click)="walletOperation('cashIn',template)" type="button"
+                                    class="btn btn-lg btn-warning">CASH IN</button>
                             </div>
                         </div>
                         <div class="col-lg-6 btn-lg">
-                            <div class="text-center">
-                                <button type="button" class="btn btn-lg btn-warning">CASH OUT</button>
+                            <div class="text-center" style="height: 95px;">
+                                <button [disabled]="!userByEmailData.isVerified"
+                                    (click)="walletOperation('cashOut',template)" type="button"
+                                    class="btn btn-lg btn-warning">CASH OUT</button>
+                                <br>
+                                <div *ngIf="!userByEmailData.isVerified">
+                                    <small>
+                                        Add bank details to activate
+                                    </small>
+                                    <br>
+                                    <a [routerLink]="['/bank']">Click</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -37,3 +48,56 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            <span *ngIf="cashIn">CASH IN</span>
+            <span *ngIf="cashOut">CASH OUT</span>
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <h5 *ngIf="cashOut" style="width: 100%; text-align: left;">
+            <table>
+                <tr>
+                    <td>Account Holder Name :</td>
+                    <td><b>{{userByEmailData.actualname}}</b></td>
+                </tr>
+                <tr>
+                    <td>Account Number :</td>
+                    <td><b>{{userByEmailData.accountNo}}</b></td>
+                </tr>
+                <tr>
+                    <td>IFSC Code :</td>
+                    <td><b>{{userByEmailData.ifscCode}}</b></td>
+                </tr>
+            </table>
+        </h5>
+        <h1>
+            <input style="width: 100%; text-align: right;" autocomplete="off" min="100" max="10000" type="number"
+                [(ngModel)]="amount">
+        </h1>
+        <div *ngIf="!amount" class="errorMsg">
+            <div>Amount required.</div>
+        </div>
+        <div *ngIf="100 > amount " class="errorMsg">
+            <div>Minimum limit is 100.</div>
+        </div>
+        <div *ngIf="amount > 10000 " class="errorMsg">
+            <div>Maximum limit is 10000.</div>
+        </div>
+        <div *ngIf="amount > userByEmailData.wallet && cashOut" class="errorMsg">
+            <div>Innsufficiant balance in wallet.</div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+        <button
+            [disabled]="(!amount) || (100 > amount) || (amount > 10000) || amount > userByEmailData.wallet && cashOut"
+            type="button" class="btn btn-info" (click)="onSubmit()">Confirm</button>
+    </div>
+</ng-template>

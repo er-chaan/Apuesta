@@ -53,7 +53,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
       if (sessionStorage.getItem("user")) {
         this.getNotifications();
       }
-    }, 5000);
+    }, 20000);
   }
 
   ngOnDestroy() {
