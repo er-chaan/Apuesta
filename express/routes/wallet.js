@@ -41,7 +41,7 @@ router.post('/cashout', function (req, res) {
                   return res.status(200).send({ status: false, error: error.sqlMessage });
                 } else {
                   // return res.status(200).send({ status: true });
-                  scripts = `INSERT INTO transactions_users(uid, mode, amount, description) VALUES(${req.body.uid},'debit', ${req.body.amount}, 'Withdraw');`;
+                  scripts = `INSERT INTO transactions_users(uid, mode, amount, description) VALUES(${req.body.uid},'debit', ${-req.body.amount}, 'Withdraw');`;
                   dbConn.query(scripts, null, function (error) {
                     if (error) {
                       return res.status(200).send({ status: false, error: "Transfer Successfull Only Insert Failed : "+error.sqlMessage });
