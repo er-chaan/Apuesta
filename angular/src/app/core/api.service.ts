@@ -42,4 +42,9 @@ export class ApiService {
     return this.httpClient.post<any>(this.api + "/wallet/cashin", data);
   }
 
+  // pgInitiateTransaction(mid,oid): Observable<any> {
+  //   let pgUrl = "https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?";
+  //   return this.httpClient.post<any>(pgUrl + "mid="+mid+"&orderId="+oid+"",null);
+  // }
+
 }

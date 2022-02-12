@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dbConn = require('./db');
+var config = require('./config');
 var cors = require('cors');
 
 
@@ -42,6 +43,19 @@ var closedMiddleware = function (req, res, next) {
     }
 }
 
+
+var paymentGatewayMiddleware = function (req, res, next) {
+    next();
+return
+    mid = req.body.MID;
+    if (mid == config.paytmMid || mid == config.paytmMid) {
+        next();
+    } else {
+        res.status(401).send("unauthorized");
+    }
+}
+
+
 var adminMiddleware = function (req, res, next) {
     token = req.headers.token;
     email = req.headers.email;
@@ -53,7 +67,7 @@ var adminMiddleware = function (req, res, next) {
                 dbConn.query('SELECT id FROM users where ? AND ?', [{ email: email }, { token: token }], function (error, results, fields) {
                     if (error) {
                         return res.status(200).send({ status: false, error: error.sqlMessage });
-                    }else{
+                    } else {
                         if (results.length) {
                             next();
                         } else {
@@ -87,6 +101,7 @@ var authRouter = require('./routes/auth');
 var notificationsRouter = require('./routes/notifications');
 var userRouter = require('./routes/user');
 var walletRouter = require('./routes/wallet');
+var callbackRouter = require('./routes/callback');
 var supportRouter = require('./routes/support');
 var transactionsRouter = require('./routes/transactions');
 
@@ -95,12 +110,9 @@ app.use('/auth', openMiddleware, authRouter);
 app.use('/notifications', closedMiddleware, notificationsRouter);
 app.use('/user', closedMiddleware, userRouter);
 app.use('/wallet', closedMiddleware, walletRouter);
+app.use('/callback', paymentGatewayMiddleware, callbackRouter);
 app.use('/support', closedMiddleware, supportRouter);
 app.use('/transactions', closedMiddleware, transactionsRouter);
-
-
-
-
 
 
 module.exports = app;

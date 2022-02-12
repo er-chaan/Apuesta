@@ -9,6 +9,13 @@ const routes: Routes = [
     data: {
       title: 'Wallet'
     }
+  },
+  {
+    path: ':status/:response',
+    component: WalletComponent,
+    data: {
+      title: 'Wallet'
+    }
   }
 ];
 

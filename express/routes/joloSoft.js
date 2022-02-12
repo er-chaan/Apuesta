@@ -21,7 +21,7 @@ async function bankAccountVerificationAPI(accountNo, ifscCode) {
         url = config.joloSoftBaseURL + 'account_check.php?apikey=' + config.joloSoftAPIKey +
             '&' + 'beneficiary_account_no=' + accountNo +
             '&' + 'beneficiary_ifsc=' + ifscCode +
-            '&' + 'orderid=bava_' + (Math.floor(Math.random() * 9999999) + 1000000).toString();
+            '&' + 'orderid=bava_' + Math.round((new Date()).getTime() / 1000);
         request(url, function (error, response, body) {
             if (error) {
                 reject(error);
@@ -41,7 +41,7 @@ async function moneyTransferAPI(accountNo, ifscCode, amount, mobile) {
             '&' + 'beneficiary_account_no=' + accountNo +
             '&' + 'beneficiary_ifsc=' + ifscCode +
             '&' + 'amount=' + amount +
-            '&' + 'orderid=mta_' + (Math.floor(Math.random() * 9999999) + 1000000).toString() +
+            '&' + 'orderid=mta_' + Math.round((new Date()).getTime() / 1000) +
             '&' + 'purpose=' + 'OTHERS' +
             '&' + 'mobileno=' + mobile +
             '&' + 'remarks=' + 'BrandName';
@@ -53,7 +53,7 @@ async function moneyTransferAPI(accountNo, ifscCode, amount, mobile) {
                 resolve(body);
             }
         });
-    })
+    });
 }
 
 module.exports.bankAccountVerificationAPI = bankAccountVerificationAPI;

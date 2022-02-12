@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var dbConn = require('../db');
 var joloSoft = require('./joloSoft');
-
+var paytm = require('./paytm');
 
 router.post('/cashout', function (req, res) {
   // console.log(req.body.uid)
@@ -32,7 +32,6 @@ router.post('/cashout', function (req, res) {
                 }
               });
             } else if (response.status == "ACCEPTED") {
-
               // transfer
               // return res.status(200).send({ status: true, data: response })
               sql = "UPDATE users SET wallet=wallet-" + req.body.amount + " WHERE id=" + req.body.uid + "";
@@ -41,7 +40,7 @@ router.post('/cashout', function (req, res) {
                   return res.status(200).send({ status: false, error: error.sqlMessage });
                 } else {
                   // return res.status(200).send({ status: true });
-                  scripts = `INSERT INTO transactions_users(uid, mode, amount, description) VALUES(${req.body.uid},'debit', ${-req.body.amount}, 'Withdraw');`;
+                  scripts = `INSERT INTO transactions_users(uid, oid, mode, amount, description) VALUES(${req.body.uid},'${response.orderid}','debit', ${-req.body.amount}, 'Withdraw');`;
                   dbConn.query(scripts, null, function (error) {
                     if (error) {
                       return res.status(200).send({ status: false, error: "Transfer Successfull Only Insert Failed : " + error.sqlMessage });
@@ -111,8 +110,30 @@ router.post('/cashout', function (req, res) {
 
 
 router.post('/cashin', function (req, res) {
-  // console.log(req.body);
-  return res.status(200).send({ status: false, error: "Under development" });
+  console.log(req.body);
+  // return res.status(200).send({ status: false, error: "Under development" });
+  paytm.InitiateTransactionAPI(req.body.amount, req.body.uid).
+    then((response) => {
+      if(response){
+        return res.status(200).send({ status: true, data: response });
+      }
+      else {
+        return res.status(200).send({ status: false, error: "Try Later" });
+      }
+    }).catch((error) => {
+      return res.status(200).send({ status: false, error: error });
+    });
 });
+
+router.post('/callback', function(req, res, next) {
+  // res.render('index', { title: 'Express' });
+  console.log("body ==== ",req.body);
+  console.log("status ==== ",req.status);
+  console.log("error ==== ",req.error);
+  // window.location = "localhost:4200/#/wallet"
+});
+
+
+
 
 module.exports = router;

@@ -36,8 +36,9 @@ export class TransactionsComponent implements OnInit {
           this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 5,
-            lengthMenu: [5, 10, 25],
-            processing: true
+            lengthMenu: [5, 10, 15, 20],
+            processing: true,
+            order: []
           };
           this.transactionsByIdData = response.data;
         }

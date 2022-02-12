@@ -5,6 +5,7 @@ import { WalletRoutingModule } from './wallet-routing.module';
 import { WalletComponent } from './wallet.component';
 import { SharedModule } from '../../../core/shared.module';
 
+import { CheckoutModule } from 'paytm-blink-checkout-angular';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,10 @@ import { SharedModule } from '../../../core/shared.module';
   imports: [
     CommonModule,
     WalletRoutingModule,
-    SharedModule
+    SharedModule,
+    CheckoutModule
   ]
 })
 export class WalletModule { }
+
+// https://staticpg.paytm.in/checkoutjs/21/docs/#/quickstart
