@@ -303,13 +303,13 @@ export const navItemsUser: INavData[] = [
   //   }
   // },
   {
-    name: 'Playing',
+    name: 'Board',
     url: '/dashboard',
     icon: 'icon-trophy',
   },
   {
     name: 'Bets',
-    url: '/dashboard',
+    url: '/bets',
     icon: 'icon-briefcase',
   },
   {

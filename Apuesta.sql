@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 11, 2022 at 04:56 PM
+-- Generation Time: Feb 12, 2022 at 06:25 PM
 -- Server version: 8.0.27-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -58,7 +58,17 @@ INSERT INTO `notifications` (`id`, `forAdmin`, `title`, `description`, `status`)
 (15, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
 (16, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 150.5 but API Fund is undefined', 'active'),
 (17, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 150.5 but API Fund is undefined', 'active'),
-(18, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 150.2 but API Fund is undefined', 'active');
+(18, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 150.2 but API Fund is undefined', 'active'),
+(19, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
+(20, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
+(21, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
+(22, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 50 but API Fund is undefined', 'active'),
+(23, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 50 but API Fund is undefined', 'active'),
+(24, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 50 but API Fund is undefined', 'active'),
+(25, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 50 but API Fund is undefined', 'active'),
+(26, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.43 but API Fund is undefined', 'active'),
+(27, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.34 but API Fund is undefined', 'active'),
+(28, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.23 but API Fund is undefined', 'active');
 
 -- --------------------------------------------------------
 
@@ -121,6 +131,7 @@ INSERT INTO `transactions` (`id`, `uid`, `mode`, `amount`, `description`, `statu
 
 CREATE TABLE `transactions_users` (
   `id` int NOT NULL,
+  `oid` varchar(100) NOT NULL DEFAULT '0',
   `uid` int NOT NULL,
   `mode` enum('credit','debit') DEFAULT NULL,
   `amount` float NOT NULL DEFAULT '0',
@@ -133,15 +144,27 @@ CREATE TABLE `transactions_users` (
 -- Dumping data for table `transactions_users`
 --
 
-INSERT INTO `transactions_users` (`id`, `uid`, `mode`, `amount`, `description`, `status`) VALUES
-(10, 75, 'credit', 50, 'Welcome Bonus', 'success'),
-(12, 75, 'credit', 34, 'fhbfgth', 'success'),
-(13, 76, 'credit', 50, 'Welcome Bonus', 'success'),
-(14, 77, 'credit', 50, 'Welcome Bonus', 'success'),
-(15, 77, 'debit', 100, 'Withdraw', 'success'),
-(16, 77, 'debit', -100, 'Withdraw', 'success'),
-(17, 77, 'debit', -100, 'Withdraw', 'success'),
-(18, 77, 'debit', -150, 'Withdraw', 'success');
+INSERT INTO `transactions_users` (`id`, `oid`, `uid`, `mode`, `amount`, `description`, `status`) VALUES
+(10, '0', 75, 'credit', 50, 'Welcome Bonus', 'success'),
+(12, '0', 75, 'credit', 34, 'fhbfgth', 'success'),
+(13, '0', 76, 'credit', 50, 'Welcome Bonus', 'success'),
+(14, '0', 77, 'credit', 50, 'Welcome Bonus', 'success'),
+(15, '0', 77, 'debit', 100, 'Withdraw', 'success'),
+(16, '0', 77, 'debit', -100, 'Withdraw', 'success'),
+(17, '0', 77, 'debit', -100, 'Withdraw', 'success'),
+(18, '0', 77, 'debit', -150, 'Withdraw', 'success'),
+(19, '0', 77, 'debit', -50, 'Withdraw', 'success'),
+(20, '0', 77, 'debit', -100, 'Withdraw', 'success'),
+(21, '77_1644667822', 77, 'credit', 100, 'Deposit', 'success'),
+(22, '77_1644668269', 77, 'credit', 100, 'Deposit', 'success'),
+(23, '77_1644668387', 77, 'credit', 100.43, 'Deposit', 'success'),
+(24, '0', 77, 'debit', -100, 'Withdraw', 'success'),
+(25, '0', 77, 'debit', -100, 'Withdraw', 'success'),
+(26, 'mta_1644668695', 77, 'debit', -100, 'Withdraw', 'success'),
+(27, '77_1644669385', 77, 'credit', 100, 'Deposit', 'success'),
+(28, 'mta_1644669720', 77, 'debit', -100, 'Withdraw', 'success'),
+(29, '77_1644669995', 77, 'credit', 100, 'Deposit', 'success'),
+(30, 'mta_1644670209', 77, 'debit', -100, 'Withdraw', 'success');
 
 -- --------------------------------------------------------
 
@@ -171,7 +194,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `mobile`, `email`, `token`, `wallet`, `actualname`, `accountNo`, `ifscCode`, `isVerified`, `isOnline`, `visits`, `status`) VALUES
-(77, 'Er Chaan', '1000000000', 'alone8street@gmail.com', 'ya29.A0ARrdaM8tVNA4kL1ZngsOqRgpbD2RCT1ojBuTH7QMFFUCGVkxP7cvzFkWB4R9RITNvnxY87fXiFGGAJrTJVKzbzzY-YV3PQPCusq76s8cUSwQKhWNLTmutLBi1cbsNA1DVDfdvAOBob6iB4WQIwYLkTkcGrNSiw', 450, 'Unknown', 10133323, 'dgdfgsdsd', 1, 1, 13, 'active');
+(77, 'Er Chaan', '1000000000', 'alone8street@gmail.com', 'ya29.A0ARrdaM-dSPrRdMMBAbQ0UfnLsaybqVkhDKHv6oiMzjSdzJ24-awSuEskGAK2UCC56S0-F67JyxdUsood-rdw-hTs9ep4lg7mNWXZL5_9pPO-yXApAjHLe9oEpyAUR4mpD8oW_EyQ1iJ_GzHpT4mRqIC_gvkiVA', 200.43, 'Unknown', 10133323, 'dgdfgsdsd', 1, 1, 18, 'active');
 
 --
 -- Indexes for dumped tables
@@ -216,7 +239,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `support`
@@ -234,7 +257,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `transactions_users`
 --
 ALTER TABLE `transactions_users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `users`

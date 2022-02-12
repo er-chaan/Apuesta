@@ -78,17 +78,17 @@
             </table>
         </h5>
         <h1>
-            <input style="width: 100%; text-align: right;" autocomplete="off" min="100" max="10000" type="number"
+            <input style="width: 100%; text-align: right;" autocomplete="off" [min]="minAmt" [max]="maxAmt" type="number"
                 [(ngModel)]="amount">
         </h1>
         <div *ngIf="!amount" class="errorMsg">
             <div>Amount required.</div>
         </div>
-        <div *ngIf="100 > amount " class="errorMsg">
-            <div>Minimum limit is 100.</div>
+        <div *ngIf="minAmt > amount " class="errorMsg">
+            <div>Minimum limit is {{minAmt}}.</div>
         </div>
-        <div *ngIf="amount > 10000 " class="errorMsg">
-            <div>Maximum limit is 10000.</div>
+        <div *ngIf="amount > maxAmt " class="errorMsg">
+            <div>Maximum limit is {{maxAmt}}.</div>
         </div>
         <div *ngIf="amount > userByEmailData.wallet && cashOut" class="errorMsg">
             <div>Innsufficiant balance in wallet.</div>
@@ -100,7 +100,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
         <button
-            [disabled]="(amount % 1 !== 0) || (!amount) || (100 > amount) || (amount > 10000) || amount > userByEmailData.wallet && cashOut"
+            [disabled]="(amount % 1 !== 0) || (!amount) || (minAmt > amount) || (amount > maxAmt) || amount > userByEmailData.wallet && cashOut"
             type="button" class="btn btn-info" (click)="onSubmit()">Confirm</button>
     </div>
 </ng-template>

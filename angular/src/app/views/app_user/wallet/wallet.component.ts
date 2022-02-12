@@ -112,8 +112,10 @@ export class WalletComponent implements OnInit {
   cashIn: boolean = false;
   cashOut: boolean = false;
 
+  minAmt:number = 10;
+  maxAmt:number = 100000;
   walletOperation(action, template: TemplateRef<any>) {
-    this.amount = 100;
+    this.amount = 10;
     this.cashIn = false;
     this.cashOut = false;
     if (action == "cashIn") {
