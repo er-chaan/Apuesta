@@ -34,11 +34,11 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     private api: ApiService,
     private router: Router,
     private authService: SocialAuthService) {
-      console.log("constructor");
+    // console.log("constructor");
   }
 
   ngOnInit() {
-    console.log("onInit");
+    // console.log("onInit");
     this.userObj = JSON.parse(sessionStorage.getItem("user"));
     if (this.userObj.email == "er.chandreshbhai@gmail.com") {
       this.navItems = navItemsAdmin
@@ -57,8 +57,10 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("onDestroy");
-    this.triggerNotifications.unsubscribe();
+    // console.log("onDestroy");
+    if(this.triggerNotifications){
+      this.triggerNotifications.unsubscribe();
+    }
   }
 
   toggleMinimize(e) {
@@ -101,8 +103,5 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     )
   }
 
-  // ngOnDestroy(){
-
-  // }
 
 }

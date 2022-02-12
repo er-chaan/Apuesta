@@ -304,7 +304,7 @@ export const navItemsUser: INavData[] = [
   // },
   {
     name: 'Board',
-    url: '/dashboard',
+    url: '/board',
     icon: 'icon-trophy',
   },
   {

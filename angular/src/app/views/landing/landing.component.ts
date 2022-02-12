@@ -39,7 +39,7 @@ export class LandingComponent implements OnInit {
 
   ngOnInit() {
     if (sessionStorage.getItem("token")) {
-      this.router.navigate(["/dashboard"]);
+      this.router.navigate(["/board"]);
       return
     }
     this.authService.authState.subscribe((user) => {
@@ -69,7 +69,7 @@ export class LandingComponent implements OnInit {
         if (response.status) {
           sessionStorage.setItem("token", response.data.authToken);
           sessionStorage.setItem("user", JSON.stringify(response.data));
-          this.router.navigate(["/dashboard"]);
+          this.router.navigate(["/board"]);
         }
         else {
           this.toastr.error(response.error, 'API Error');

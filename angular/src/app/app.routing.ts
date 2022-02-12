@@ -59,6 +59,10 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'board',
+        loadChildren: () => import('./views/app_user/board/board.module').then(m => m.BoardModule)
+      },
+      {
         path: 'bets',
         loadChildren: () => import('./views/app_user/bets/bets.module').then(m => m.BetsModule)
       },
