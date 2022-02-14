@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 12, 2022 at 06:25 PM
+-- Generation Time: Feb 14, 2022 at 11:05 PM
 -- Server version: 8.0.27-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -21,6 +21,59 @@ SET time_zone = "+00:00";
 --
 -- Database: `Apuesta`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bets`
+--
+
+CREATE TABLE `bets` (
+  `id` int NOT NULL,
+  `type` enum('toss','result') NOT NULL,
+  `bid` int NOT NULL,
+  `team` varchar(100) NOT NULL,
+  `amount` int NOT NULL,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` enum('booked','won','lost','') NOT NULL DEFAULT 'booked'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `board`
+--
+
+CREATE TABLE `board` (
+  `id` int NOT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `apiId` int NOT NULL,
+  `format` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `teamA` varchar(100) NOT NULL,
+  `teamB` varchar(100) NOT NULL,
+  `scoreA` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0-0 (0)',
+  `scoreB` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0-0 (0)',
+  `isLive` tinyint(1) NOT NULL DEFAULT '0',
+  `tossDecision` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0',
+  `toss` varchar(100) NOT NULL DEFAULT '0',
+  `winner` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '0',
+  `startsAt` timestamp NOT NULL,
+  `endsAt` timestamp NOT NULL,
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `board`
+--
+
+INSERT INTO `board` (`id`, `status`, `apiId`, `format`, `teamA`, `teamB`, `scoreA`, `scoreB`, `isLive`, `tossDecision`, `toss`, `winner`, `startsAt`, `endsAt`) VALUES
+(29, 'upcoming', 11097, 'T20', 'Australia', 'Sri Lanka', '0-0 (0)', '0-0 (0)', 0, '0', '0', '0', '2022-02-15 08:10:00', '2022-02-15 11:10:00'),
+(30, 'upcoming', 11760, 'T20', 'India', 'West Indies', '0-0 (0)', '0-0 (0)', 0, '0', '0', '0', '2022-02-16 14:00:00', '2022-02-16 17:00:00'),
+(31, 'upcoming', 11907, 'Test', 'New Zealand', 'South Africa', '0-0 (0)', '0-0 (0)', 0, '0', '0', '0', '2022-02-16 22:00:00', '2022-02-21 05:00:00'),
+(32, 'upcoming', 11099, 'T20', 'Australia', 'Sri Lanka', '0-0 (0)', '0-0 (0)', 0, '0', '0', '0', '2022-02-18 08:10:00', '2022-02-18 11:10:00'),
+(33, 'upcoming', 11761, 'T20', 'India', 'West Indies', '0-0 (0)', '0-0 (0)', 0, '0', '0', '0', '2022-02-18 14:00:00', '2022-02-18 17:00:00'),
+(34, 'upcoming', 11098, 'T20', 'Australia', 'Sri Lanka', '0-0 (0)', '0-0 (0)', 0, '0', '0', '0', '2022-02-20 06:10:00', '2022-02-20 09:10:00'),
+(35, 'upcoming', 11762, 'T20', 'India', 'West Indies', '0-0 (0)', '0-0 (0)', 0, '0', '0', '0', '2022-02-20 14:00:00', '2022-02-20 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -68,7 +121,8 @@ INSERT INTO `notifications` (`id`, `forAdmin`, `title`, `description`, `status`)
 (25, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 50 but API Fund is undefined', 'active'),
 (26, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.43 but API Fund is undefined', 'active'),
 (27, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.34 but API Fund is undefined', 'active'),
-(28, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.23 but API Fund is undefined', 'active');
+(28, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.23 but API Fund is undefined', 'active'),
+(29, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 10 but API Fund is undefined', 'active');
 
 -- --------------------------------------------------------
 
@@ -164,7 +218,9 @@ INSERT INTO `transactions_users` (`id`, `oid`, `uid`, `mode`, `amount`, `descrip
 (27, '77_1644669385', 77, 'credit', 100, 'Deposit', 'success'),
 (28, 'mta_1644669720', 77, 'debit', -100, 'Withdraw', 'success'),
 (29, '77_1644669995', 77, 'credit', 100, 'Deposit', 'success'),
-(30, 'mta_1644670209', 77, 'debit', -100, 'Withdraw', 'success');
+(30, 'mta_1644670209', 77, 'debit', -100, 'Withdraw', 'success'),
+(31, '77_1644690601', 77, 'credit', 100, 'Deposit', 'success'),
+(32, '77_1644691516', 77, 'credit', 10, 'Deposit', 'success');
 
 -- --------------------------------------------------------
 
@@ -194,11 +250,24 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `mobile`, `email`, `token`, `wallet`, `actualname`, `accountNo`, `ifscCode`, `isVerified`, `isOnline`, `visits`, `status`) VALUES
-(77, 'Er Chaan', '1000000000', 'alone8street@gmail.com', 'ya29.A0ARrdaM-dSPrRdMMBAbQ0UfnLsaybqVkhDKHv6oiMzjSdzJ24-awSuEskGAK2UCC56S0-F67JyxdUsood-rdw-hTs9ep4lg7mNWXZL5_9pPO-yXApAjHLe9oEpyAUR4mpD8oW_EyQ1iJ_GzHpT4mRqIC_gvkiVA', 200.43, 'Unknown', 10133323, 'dgdfgsdsd', 1, 1, 18, 'active');
+(77, 'Er Chaan', '1000000000', 'alone8street@gmail.com', 'ya29.A0ARrdaM8p8v_zzu2JX7BynmfH53c2BU9R1vvRVgNMQwR9mNv71MKUfzxlaP-ZHp9JIfSsUNIMbVYuoiD4JqXNhiaQZ2J_tUCx3ZvQz2mzDLoYxCs1ftUonOD13FebJlSAJZ-9gfMoCXHrlfWQtgEZ-0aHN3a17w', 310.43, 'Unknown', 10133323, 'dgdfgsdsd', 1, 1, 24, 'active');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bets`
+--
+ALTER TABLE `bets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `board`
+--
+ALTER TABLE `board`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `apiId` (`apiId`);
 
 --
 -- Indexes for table `notifications`
@@ -236,10 +305,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `bets`
+--
+ALTER TABLE `bets`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `board`
+--
+ALTER TABLE `board`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `support`
@@ -257,7 +338,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `transactions_users`
 --
 ALTER TABLE `transactions_users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `users`
