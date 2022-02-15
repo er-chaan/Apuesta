@@ -1,0 +1,27 @@
+
+
+var config = {
+    dbPass: "",
+    emailId: "",
+    emailPass: "",
+    joloSoftBaseURL: "",
+    // joloSoftBaseURL: "",
+    joloSoftAPIKey: "",
+    joloSoftUserId: "",
+    // testPaytm
+    paytmUrl: "",
+    paytmMid: "",
+    paytmKey: "",
+    paytmWebsite: "",
+    paytmCallback: "",
+    paytmCallbackFrontend : "",
+    // prodPaytm
+    // paytmUrl:"",
+    // paytmMid: "",
+    // paytmKey: "",
+    // paytmWebsite: "",
+    // paytmCallback: "",
+    // paytmCallbackFrontend : ""
+};
+
+module.exports = config;
