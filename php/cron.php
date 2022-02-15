@@ -2,8 +2,9 @@
 
 // */1 * * * *  cd ~/Web/Apuesta/php/ && php cron.php  > logs/`date +\%H:\%M`.log 2>&1
 
+include "config.php";
+
 $ch = curl_init();
-$url = "https://apiv2.cricket.com.au/web/views/fixtures?CompletedFixturesCount=12&InProgressFixturesCount=12&UpcomingFixturesCount=12";
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $output = curl_exec($ch);
@@ -14,18 +15,6 @@ $response = json_decode($output); //object
 
 if (!$response->ResponseError) {
     // ----------------
-    $servername = "localhost";
-    $username = "root";
-    $password = "qwerty@123";
-    $dbname = "Apuesta";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-
     foreach ($response->UpcomingFixtures as $key => $value) {
         $sql = "SELECT id FROM board WHERE apiId=" . $value->Id . "";
         $result = $conn->query($sql);
