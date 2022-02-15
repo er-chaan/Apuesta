@@ -37,6 +37,8 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     // console.log("constructor");
   }
 
+  s1: any;
+  s2: any;
   ngOnInit() {
     // console.log("onInit");
     this.userObj = JSON.parse(sessionStorage.getItem("user"));
@@ -46,10 +48,10 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
       this.navItems = navItemsUser
     }
     // this.navItems = navItems;
-    setInterval(() => {
+    this.s1 = setInterval(() => {
       this.now = new Date();
     }, 1);
-    setInterval(() => {
+    this.s2 = setInterval(() => {
       if (sessionStorage.getItem("user")) {
         this.getNotifications();
       }
@@ -58,8 +60,14 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // console.log("onDestroy");
-    if(this.triggerNotifications){
+    if (this.triggerNotifications) {
       this.triggerNotifications.unsubscribe();
+    }
+    if (this.s1) {
+      clearInterval(this.s1);
+    }
+    if (this.s2) {
+      clearInterval(this.s2);
     }
   }
 

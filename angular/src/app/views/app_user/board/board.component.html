@@ -1,1 +1,131 @@
-<p>board works!</p>
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Live
+                </div>
+                <div class="card-body">
+                    card body
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Completed
+                </div>
+                <div class="card-body">
+                    card body
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Upcoming
+                </div>
+                <div class="card-body" *ngIf="!boardUpcomingData">
+                    No Data
+                </div>
+                <div class="card-body" *ngIf="boardUpcomingData">
+<!-- {{boardUpcomingData|json}} -->
+                    <div >
+                        <div class="row" style="background-color:gainsboro;">
+                            <div class="col-lg-6">
+                                <div class="pull-left">16 Feb 22</div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="pull-right">7:00 PM your time</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <img class="center" height="50" width="80"
+                                    src="https://www.cricket.com.au/-/media/Logos/Teams/International/India.ashx?h=300"
+                                    alt="" srcset="">
+                                <div class="text-center">INDIA</div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img class="center" height="50" width="80"
+                                    src="https://www.cricket.com.au/-/media/Logos/Teams/International/West%20Indies.ashx?h=300"
+                                    alt="" srcset="">
+                                <div class="text-center">WEST INDIES</div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> In Progress
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Date registered</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Samppa Nori</td>
+                                    <td>2012/01/01</td>
+                                    <td>Member</td>
+                                    <td>
+                                        <span class="badge badge-success">Active</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Upcoming
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Date registered</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Samppa Nori</td>
+                                    <td>2012/01/01</td>
+                                    <td>Member</td>
+                                    <td>
+                                        <span class="badge badge-success">Active</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

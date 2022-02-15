@@ -35,16 +35,17 @@ export class ApiService {
   notificationsGet(): Observable<any> {
     return this.httpClient.get<any>(this.api + "/notifications");
   }
+  boardGet(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/board");
+  }
+  boardGetByStatus(status: any): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/board/status/" + status);
+  }
   cashOut(data: any): Observable<any> {
     return this.httpClient.post<any>(this.api + "/wallet/cashout", data);
   }
   cashIn(data: any): Observable<any> {
     return this.httpClient.post<any>(this.api + "/wallet/cashin", data);
   }
-
-  // pgInitiateTransaction(mid,oid): Observable<any> {
-  //   let pgUrl = "https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?";
-  //   return this.httpClient.post<any>(pgUrl + "mid="+mid+"&orderId="+oid+"",null);
-  // }
 
 }
