@@ -1,25 +1,15 @@
 <?php
-// create curl resource
+
+// */1 * * * *  cd ~/Web/Apuesta/php/ && php cron.php  > logs/`date +\%H:\%M`.log 2>&1
+
 $ch = curl_init();
-
 $url = "https://apiv2.cricket.com.au/web/views/fixtures?CompletedFixturesCount=12&InProgressFixturesCount=12&UpcomingFixturesCount=12";
-
-// set url
 curl_setopt($ch, CURLOPT_URL, $url);
-
-//return the transfer as a string
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-// $output contains the output string
 $output = curl_exec($ch);
-
-// close curl resource to free up system resources
 curl_close($ch);
 
 // -----------------------------------------------
-
-
-// $response = json_decode($output,true); //array
 $response = json_decode($output); //object
 
 if (!$response->ResponseError) {
@@ -76,7 +66,7 @@ if (!$response->ResponseError) {
             }
 
             $values = " status='inProgress', isLive=1, tossDecision='" . $value->TossDecision . "' ,toss='" . $toss . "', scoreA='" . $scoreA . "', scoreB='" . $scoreB . "' ";
-            $update = "UPDATE board SET " . $values . " WHERE id=" + $value->id;
+            $update = "UPDATE board SET " . $values . " WHERE apiId=" . $value->Id;
             $conn->query($update);
         }
     }
@@ -99,9 +89,14 @@ if (!$response->ResponseError) {
                 $scoreA = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
                 $scoreB = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
             }
-
-            $values = " status='completed', isLive=0, winner='" . $winner . "', scoreA='" . $scoreA . "', scoreB='" . $scoreB . "' ";
-            $update = "UPDATE board SET " . $values . " WHERE id=" + $value->id;
+            if (strpos($value->TossResult, $row['teamA']) !== false) {
+                $toss = $row['teamA'];
+            }
+            if (strpos($value->TossResult, $row['teamB']) !== false) {
+                $toss = $row['teamB'];
+            }
+            $values = " status='completed', tossDecision='" . $value->TossDecision . "', toss='" . $toss . "' ,isLive=0, winner='" . $winner . "', scoreA='" . $scoreA . "', scoreB='" . $scoreB . "' ";
+            $update = "UPDATE board SET " . $values . " WHERE apiId=" . $value->Id;
             $conn->query($update);
 
             // 
@@ -116,4 +111,3 @@ if (!$response->ResponseError) {
     // ---------------- 
 
 }
-// var_dump(sizeof($response->UpcomingFixtures));
