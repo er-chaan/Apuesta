@@ -27,8 +27,8 @@ if (!$response->ResponseError) {
                 $value->EndDateTime = date("Y-m-d H:i:s", strtotime($value->EndDateTime));
                 $value->HomeTeam->Name = str_replace(" Men", "", $value->HomeTeam->Name);
                 $value->AwayTeam->Name = str_replace(" Men", "", $value->AwayTeam->Name);
-                $insert = "INSERT INTO board (`apiId`,`format`,`teamA`,`teamB`, `startsAt`,`endsAt`,`status`) 
-                                    VALUES (" . $value->Id . ", '" . $value->GameType . "', '" . $value->HomeTeam->Name . "','" . $value->AwayTeam->Name . "','" . $value->StartDateTime . "','" . $value->EndDateTime . "','upcoming')";
+                $insert = "INSERT INTO board (`resultText`,`apiId`,`format`,`teamA`,`teamB`, `startsAt`,`endsAt`,`status`) 
+                                    VALUES ('".$value->ResultText."'," . $value->Id . ", '" . $value->GameType . "', '" . $value->HomeTeam->Name . "','" . $value->AwayTeam->Name . "','" . $value->StartDateTime . "','" . $value->EndDateTime . "','upcoming')";
                 $conn->query($insert);
             }
         }
@@ -46,15 +46,21 @@ if (!$response->ResponseError) {
             if (strpos($value->TossResult, $row['teamB']) !== false) {
                 $toss = $row['teamB'];
             }
+            $scoreA = "0-0(0)";
+            $scoreB = "0-0(0)";
             if (($row['teamA'] == $toss) && $value->TossDecision == "Bat") {
                 $scoreA = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
-                $scoreB = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
+                if (sizeof($value->Innings) > 1) {
+                    $scoreB = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
+                }
             } else {
-                $scoreA = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
+                if (sizeof($value->Innings) > 1) {
+                    $scoreA = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
+                }
                 $scoreB = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
             }
 
-            $values = " status='inProgress', isLive=1, tossDecision='" . $value->TossDecision . "' ,toss='" . $toss . "', scoreA='" . $scoreA . "', scoreB='" . $scoreB . "' ";
+            $values = " status='inProgress', isLive=1, resultText='" . $value->ResultText . "', tossDecision='" . $value->TossDecision . "' ,toss='" . $toss . "', scoreA='" . $scoreA . "', scoreB='" . $scoreB . "' ";
             $update = "UPDATE board SET " . $values . " WHERE apiId=" . $value->Id;
             $conn->query($update);
         }
@@ -84,7 +90,7 @@ if (!$response->ResponseError) {
             if (strpos($value->TossResult, $row['teamB']) !== false) {
                 $toss = $row['teamB'];
             }
-            $values = " status='completed', tossDecision='" . $value->TossDecision . "', toss='" . $toss . "' ,isLive=0, winner='" . $winner . "', scoreA='" . $scoreA . "', scoreB='" . $scoreB . "' ";
+            $values = " status='completed', resultText='" . $value->ResultText . "', tossDecision='" . $value->TossDecision . "', toss='" . $toss . "' ,isLive=0, winner='" . $winner . "', scoreA='" . $scoreA . "', scoreB='" . $scoreB . "' ";
             $update = "UPDATE board SET " . $values . " WHERE apiId=" . $value->Id;
             $conn->query($update);
 

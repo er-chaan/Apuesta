@@ -4,9 +4,57 @@
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Live
+                    <div *ngIf="boardInProgressData.length" class="badge badge-pill badge-danger">Now</div>
                 </div>
-                <div class="card-body">
-                    card body
+                <div class="card-body text-center" *ngIf="!boardInProgressData.length">
+                    {{noDataMsg}}
+                </div>
+                <div class="card-body" *ngIf="boardInProgressData.length">
+                    <div *ngFor="let x of boardInProgressData">
+                        <div class="row" style="background-color:gainsboro;">
+                            <div class="col-lg-12">
+                                <!-- <div class="text-center">{{x.startsAt | date:'medium'}}</div> -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="dimGray text-center">
+                                    {{x.toss}} won the toss and chose to {{x.tossDecision}}
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <img class="center" height="50" width="80" src="assets/img/teams/{{x.teamA}}.png" alt=""
+                                    srcset="">
+                                <div class="text-center">
+                                    <b>
+                                        {{x.teamA}}
+                                    </b>
+                                    <div class="text-center">{{x.scoreA}}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="text-center" style="width: max-content; text-align: center;">
+                                    <b>{{x.format}}</b>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <img class="center" height="50" width="80" src="assets/img/teams/{{x.teamB}}.png" alt=""
+                                    srcset="">
+                                <div class="text-center">
+                                    <b>
+                                        {{x.teamB}}
+                                    </b>
+                                    <div class="text-center">{{x.scoreB}}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="dimGray text-center">
+                                    {{x.resultText}}
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
                 </div>
             </div>
         </div>
@@ -15,8 +63,55 @@
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Completed
                 </div>
-                <div class="card-body">
-                    card body
+                <div class="card-body text-center" *ngIf="!boardCompletedData.length">
+                    {{noDataMsg}}
+                </div>
+                <div class="card-body" *ngIf="boardCompletedData.length">
+                    <div *ngFor="let x of boardCompletedData">
+                        <div class="row" style="background-color:gainsboro;">
+                            <div class="col-lg-12">
+                                <div class="text-center">{{x.startsAt | date:'medium'}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="dimGray text-center">
+                                    {{x.toss}} won the toss and chose to {{x.tossDecision}}
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <img class="center" height="50" width="80" src="assets/img/teams/{{x.teamA}}.png" alt=""
+                                    srcset="">
+                                <div class="text-center" [ngClass]="{lightGray: x.teamA != x.winner}">
+                                    <b>
+                                        {{x.teamA}}
+                                    </b>
+                                    <div class="text-center">{{x.scoreA}}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="text-center" style="width: max-content; text-align: center;">
+                                    <b>{{x.format}}</b>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <img class="center" height="50" width="80" src="assets/img/teams/{{x.teamB}}.png" alt=""
+                                    srcset="">
+                                <div class="text-center" [ngClass]="{lightGray: x.teamB != x.winner}">
+                                    <b>
+                                        {{x.teamB}}
+                                    </b>
+                                    <div class="text-center">{{x.scoreB}}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="dimGray text-center">
+                                    {{x.resultText}}
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
                 </div>
             </div>
         </div>
@@ -25,11 +120,10 @@
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Upcoming
                 </div>
-                <div class="card-body" *ngIf="!boardUpcomingData">
-                    No Data
+                <div class="card-body text-center" *ngIf="!boardUpcomingData.length">
+                    {{noDataMsg}}
                 </div>
-                <div class="card-body" *ngIf="boardUpcomingData">
-                    <!-- {{boardUpcomingData|json}} -->
+                <div class="card-body" *ngIf="boardUpcomingData.length">
                     <div *ngFor="let x of boardUpcomingData">
                         <div class="row" style="background-color:gainsboro;">
                             <div class="col-lg-12">
@@ -44,10 +138,19 @@
                                     <b>
                                         {{x.teamA}}
                                     </b>
+                                    <div class="text-center">
+                                        <button (click)="placeBet('toss',x.id,x.teamA,template)" style="width:100%" type="button"
+                                            class="btn btn-light btn-sm btn-pill btn-outline">Toss :
+                                            {{x.rateTossTeamA}}</button>
+                                        <button (click)="placeBet('result',x.id,x.teamA,template)" style="width:100%"
+                                            type="button" class="btn btn-dark btn-sm btn-pill btn-outline">Result :
+                                            {{x.rateWinnerTeamA}}</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-2">
-                                <div class="text-center" style="font-size: x-small; margin-top: 25px;">{{x.format}}
+                                <div class="text-center" style="width: max-content; text-align: center;">
+                                    <b>{{x.format}}</b>
                                 </div>
                             </div>
                             <div class="col-lg-5">
@@ -57,108 +160,78 @@
                                     <b>
                                         {{x.teamB}}
                                     </b>
+                                    <div class="text-center">
+                                        <button (click)="placeBet('toss',x.id,x.teamB,template)" style="width:100%" type="button"
+                                            class="btn btn-light btn-sm btn-pill btn-outline">Toss :
+                                            {{x.rateTossTeamB}}</button>
+                                        <button (click)="placeBet('result',x.id,x.teamB,template)" style="width:100%"
+                                            type="button" class="btn btn-dark btn-sm btn-pill btn-outline">Result :
+                                            {{x.rateWinnerTeamB}}</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-5">
-                                <div class="text-center">1.3</div>
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="text-center" style="font-size: 8px; margin-top: 5px; width: 100%;">RATE</div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="text-center">1.4</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-5">
-                                <div class="text-center">
-                                    <button disabled="disabled" class="btn btn-sm btn-primary">BET</button>
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="text-center" style="font-size: 8px; margin-top: 5px;"></div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="text-center">
-                                    <button disabled="disabled" class="btn btn-sm btn-primary">BET</button>
+                            <div class="col-lg-12">
+                                <div class="dimGray text-center">
+                                    {{x.resultText}}
                                 </div>
                             </div>
                         </div>
                         <hr>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- <div class="animated fadeIn">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> In Progress
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Date registered</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Samppa Nori</td>
-                                    <td>2012/01/01</td>
-                                    <td>Member</td>
-                                    <td>
-                                        <span class="badge badge-success">Active</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            <span *ngIf="cashIn">Place Bet</span>
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <h5 style="width: 100%; text-align: left;">
+            <table>
+                <tr>
+                    <td>Account Holder Name :</td>
+                    <!-- <td><b>{{userByEmailData.actualname}}</b></td> -->
+                </tr>
+                <tr>
+                    <td>Account Number :</td>
+                    <!-- <td><b>{{userByEmailData.accountNo}}</b></td> -->
+                </tr>
+                <tr>
+                    <td>IFSC Code :</td>
+                    <!-- <td><b>{{userByEmailData.ifscCode}}</b></td> -->
+                </tr>
+            </table>
+        </h5>
+        <h1>
+            <input style="width: 100%; text-align: right;" autocomplete="off" [min]="minAmt" [max]="maxAmt"
+                  type="number" [(ngModel)]="amount">
+        </h1>
+        <div *ngIf="!amount" class="errorMsg">
+            <div>Amount required.</div>
+        </div>
+        <div *ngIf="minAmt > amount " class="errorMsg">
+            <div>Minimum limit is {{minAmt}}.</div>
+        </div>
+        <div *ngIf="amount > maxAmt " class="errorMsg">
+            <div>Maximum limit is {{maxAmt}}.</div>
+        </div>
+        <div *ngIf="amount % 1 !== 0" class="errorMsg">
+            <div>Decimal amount not allowed.</div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Upcoming
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Date registered</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Samppa Nori</td>
-                                    <td>2012/01/01</td>
-                                    <td>Member</td>
-                                    <td>
-                                        <span class="badge badge-success">Active</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+        <button
+            [disabled]="(amount % 1 !== 0) || (!amount) || (minAmt > amount) || (amount > maxAmt)"
+            type="button" class="btn btn-info" (click)="onSubmit()">Confirm</button>
     </div>
-</div> -->
+</ng-template>

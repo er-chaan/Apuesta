@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../../core/api.service';
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-board',
@@ -15,8 +16,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private api: ApiService,
+    private modalService: BsModalService,
   ) { }
 
+  modalRef: BsModalRef;
+  noDataMsg: any = "Stay Tuned !";
   s1: any;
   s2: any;
   s3: any;
@@ -104,5 +108,26 @@ export class BoardComponent implements OnInit, OnDestroy {
       clearInterval(this.s3);
     }
   }
+
+  amount: number = 10;
+  minAmt: number = 10;
+  maxAmt: number = 100000;
+  placeBet(type, bid, team, template) {
+    alert(type)
+    this.openModal(template);
+  }
+
+  openModal(template: TemplateRef<any>) {
+    let modalOptions: ModalOptions = {
+      backdrop: 'static',
+      keyboard: false
+    };
+    this.modalRef = this.modalService.show(template, modalOptions);
+  }
+
+  onSubmit(){
+    
+  }
+
 
 }

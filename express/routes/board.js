@@ -12,7 +12,7 @@ router.get('/', function (req, res) {
     });
 });
 router.get('/status/:status', function (req, res) {
-    dbConn.query("SELECT * FROM board WHERE ? ORDER BY startsAt ASC", [{ status: req.params.status }], function (error, results) {
+    dbConn.query("SELECT * FROM board WHERE ? ORDER BY startsAt ASC Limit 5", [{ status: req.params.status }], function (error, results) {
         if (error) {
             return res.status(200).send({ status: false, error: error.sqlMessage });
         } else {
