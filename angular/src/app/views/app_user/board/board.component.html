@@ -70,7 +70,7 @@
                     <div *ngFor="let x of boardCompletedData">
                         <div class="row" style="background-color:gainsboro;">
                             <div class="col-lg-12">
-                                <div class="text-center">{{x.startsAt | date:'medium'}}</div>
+                                <div class="text-center">{{x.startsAt | date:'medium'}} - #[{{x.id}}]</div>
                             </div>
                         </div>
                         <div class="row">
@@ -127,7 +127,7 @@
                     <div *ngFor="let x of boardUpcomingData">
                         <div class="row" style="background-color:gainsboro;">
                             <div class="col-lg-12">
-                                <div class="text-center">{{x.startsAt | date:'medium'}}</div>
+                                <div class="text-center">{{x.startsAt | date:'medium'}} - #[{{x.id}}]</div>
                             </div>
                         </div>
                         <div class="row">
@@ -227,7 +227,8 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
-        <button [disabled]="(amount % 1 !== 0) || (!amount) || (minAmt > amount) || (amount > maxAmt) || (amount > userByEmailData.wallet)" type="button"
-            class="btn btn-info" (click)="onSubmit()">Confirm</button>
+        <button
+            [disabled]="(amount % 1 !== 0) || (!amount) || (minAmt > amount) || (amount > maxAmt) || (amount > userByEmailData.wallet)"
+            type="button" class="btn btn-info" (click)="onSubmit()">Confirm</button>
     </div>
 </ng-template>

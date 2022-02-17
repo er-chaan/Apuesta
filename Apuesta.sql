@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 17, 2022 at 01:25 AM
+-- Generation Time: Feb 17, 2022 at 09:47 PM
 -- Server version: 8.0.27-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -30,13 +30,25 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bets` (
   `id` int NOT NULL,
-  `type` enum('toss','result') NOT NULL,
+  `uid` int NOT NULL,
   `bid` int NOT NULL,
+  `type` enum('toss','result') NOT NULL,
   `team` varchar(100) NOT NULL,
+  `rate` float NOT NULL,
   `amount` int NOT NULL,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('booked','won','lost','') NOT NULL DEFAULT 'booked'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `bets`
+--
+
+INSERT INTO `bets` (`id`, `uid`, `bid`, `type`, `team`, `rate`, `amount`, `status`) VALUES
+(1, 77, 38, 'toss', 'Australia', 1.2, 10, 'booked'),
+(2, 77, 38, 'toss', 'Sri Lanka', 1.3, 10, 'booked'),
+(3, 77, 38, 'result', 'Australia', 1.4, 10, 'booked'),
+(4, 77, 38, 'result', 'Sri Lanka', 1.5, 10, 'booked');
 
 -- --------------------------------------------------------
 
@@ -73,8 +85,8 @@ CREATE TABLE `board` (
 
 INSERT INTO `board` (`id`, `status`, `apiId`, `format`, `teamA`, `teamB`, `scoreA`, `scoreB`, `isLive`, `tossDecision`, `toss`, `resultText`, `winner`, `startsAt`, `endsAt`, `rateTossTeamA`, `rateTossTeamB`, `rateWinnerTeamA`, `rateWinnerTeamB`) VALUES
 (36, 'completed', 11760, 'T20', 'India', 'West Indies', '162-4(18.5)', '157-7(20.0)', 0, 'Field', 'India', 'India win by 6 wickets', 'India', '2022-02-16 13:30:00', '2022-02-16 16:30:00', 0, 0, 0, 0),
-(37, 'upcoming', 11907, 'Test', 'New Zealand', 'South Africa', '0-0 (0)', '0-0 (0)', 0, '0', '0', NULL, '0', '2022-02-16 22:00:00', '2022-02-21 05:00:00', 0, 0, 0, 0),
-(38, 'upcoming', 11099, 'T20', 'Australia', 'Sri Lanka', '0-0 (0)', '0-0 (0)', 0, '0', '0', NULL, '0', '2022-02-18 08:10:00', '2022-02-18 11:10:00', 0, 0, 0, 0),
+(37, 'inProgress', 11907, 'Test', 'New Zealand', 'South Africa', '116-3(39.0)', '95-10(49.2)', 1, 'Field', 'New Zealand', 'Stumps: New Zealand lead South Africa by 21 runs with 7 wickets remaining', '0', '2022-02-16 22:00:00', '2022-02-21 05:00:00', 0, 0, 0, 0),
+(38, 'upcoming', 11099, 'T20', 'Australia', 'Sri Lanka', '0-0 (0)', '0-0 (0)', 0, '0', '0', NULL, '0', '2022-02-18 08:10:00', '2022-02-18 11:10:00', 1.2, 1.3, 1.4, 1.5),
 (39, 'upcoming', 11761, 'T20', 'India', 'West Indies', '0-0 (0)', '0-0 (0)', 0, '0', '0', NULL, '0', '2022-02-18 13:30:00', '2022-02-18 16:30:00', 0, 0, 0, 0),
 (40, 'upcoming', 11098, 'T20', 'Australia', 'Sri Lanka', '0-0 (0)', '0-0 (0)', 0, '0', '0', NULL, '0', '2022-02-20 06:10:00', '2022-02-20 09:10:00', 0, 0, 0, 0),
 (41, 'upcoming', 11762, 'T20', 'India', 'West Indies', '0-0 (0)', '0-0 (0)', 0, '0', '0', NULL, '0', '2022-02-20 13:30:00', '2022-02-20 16:30:00', 0, 0, 0, 0);
@@ -128,7 +140,8 @@ INSERT INTO `notifications` (`id`, `forAdmin`, `title`, `description`, `status`)
 (28, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.23 but API Fund is undefined', 'active'),
 (29, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 10 but API Fund is undefined', 'active'),
 (30, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 110 but API Fund is undefined', 'active'),
-(31, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 110 but API Fund is undefined', 'active');
+(31, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 110 but API Fund is undefined', 'active'),
+(32, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 10 but API Fund is undefined', 'active');
 
 -- --------------------------------------------------------
 
@@ -182,7 +195,33 @@ INSERT INTO `transactions` (`id`, `uid`, `mode`, `amount`, `description`, `statu
 (5, 75, 'debit', -50, 'Welcome Bonus To : alone8street@gmail.com', 'success'),
 (6, 76, 'debit', -50, 'Welcome Bonus To : alone8street@gmail.com', 'success'),
 (7, 77, 'debit', -50, 'Welcome Bonus To : alone8street@gmail.com', 'success'),
-(8, 78, 'debit', -50, 'Welcome Bonus To : er.chandreshbhai@gmail.com', 'success');
+(8, 78, 'debit', -50, 'Welcome Bonus To : er.chandreshbhai@gmail.com', 'success'),
+(9, 77, 'credit', 50, 'booked bet on [39] India-result', 'success'),
+(10, 77, 'credit', 25, 'booked bet on [40] Australia-toss', 'success'),
+(11, 77, 'credit', 40, 'booked bet on #[38] Australia-result', 'success'),
+(12, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(13, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(14, 77, 'credit', 10, 'booked bet on #[38] Australia-toss', 'success'),
+(15, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(16, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(17, 77, 'credit', 10, 'booked bet on #[38] Sri Lanka-result', 'success'),
+(18, 77, 'credit', 10, 'booked bet on #[39] West Indies-result', 'success'),
+(19, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(20, 77, 'credit', 10, 'booked bet on #[39] India-result', 'success'),
+(21, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(22, 77, 'credit', 10, 'booked bet on #[39] India-result', 'success'),
+(23, 77, 'credit', 10, 'booked bet on #[39] India-result', 'success'),
+(24, 77, 'credit', 10, 'booked bet on #[39] India-toss', 'success'),
+(25, 77, 'credit', 10, 'booked bet on #[38] Sri Lanka-result', 'success'),
+(26, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(27, 77, 'credit', 10, 'booked bet on #[39] West Indies-result', 'success'),
+(28, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(29, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(30, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(31, 77, 'credit', 10, 'booked bet on #[38] Australia-toss', 'success'),
+(32, 77, 'credit', 10, 'booked bet on #[38] Sri Lanka-toss', 'success'),
+(33, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
+(34, 77, 'credit', 10, 'booked bet on #[38] Sri Lanka-result', 'success');
 
 -- --------------------------------------------------------
 
@@ -231,7 +270,39 @@ INSERT INTO `transactions_users` (`id`, `oid`, `uid`, `mode`, `amount`, `descrip
 (33, '77_1644948353', 77, 'credit', 10, 'Deposit', 'success'),
 (34, 'mta_1644948480', 77, 'debit', -10, 'Withdraw', 'success'),
 (35, 'mta_1644948488', 77, 'debit', -10, 'Withdraw', 'success'),
-(36, '0', 78, 'credit', 50, 'Welcome Bonus', 'success');
+(36, '0', 78, 'credit', 50, 'Welcome Bonus', 'success'),
+(37, '0', 77, 'debit', -10, 'booked bet on [38] Sri Lanka-toss', 'success'),
+(38, '0', 77, 'debit', -10, 'booked bet on [38] Sri Lanka-toss', 'success'),
+(39, '0', 77, 'credit', 10, 'booked bet on [38] Sri Lanka-toss', 'success'),
+(40, '0', 77, 'debit', -50, 'booked bet on [39] India-result', 'success'),
+(41, '0', 77, 'debit', -25, 'booked bet on [40] Australia-toss', 'success'),
+(42, '0', 77, 'debit', -40, 'booked bet on #[38] Australia-result', 'success'),
+(43, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(44, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(45, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-toss', 'success'),
+(46, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(47, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(48, '0', 77, 'debit', -10, 'booked bet on #[38] Sri Lanka-result', 'success'),
+(49, '0', 77, 'debit', -10, 'booked bet on #[39] West Indies-result', 'success'),
+(50, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(51, '0', 77, 'debit', -10, 'booked bet on #[39] India-result', 'success'),
+(52, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(53, '0', 77, 'debit', -10, 'booked bet on #[39] India-result', 'success'),
+(54, '0', 77, 'debit', -10, 'booked bet on #[39] India-result', 'success'),
+(55, '0', 77, 'debit', -10, 'booked bet on #[39] India-toss', 'success'),
+(56, '0', 77, 'debit', -10, 'booked bet on #[38] Sri Lanka-result', 'success'),
+(57, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(58, '0', 77, 'debit', -10, 'booked bet on #[39] West Indies-result', 'success'),
+(59, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(60, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(61, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(62, '77_1645113697', 77, 'credit', 10, 'Deposit', 'success'),
+(63, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-toss', 'success'),
+(64, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-toss', 'success'),
+(65, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-toss', 'success'),
+(66, '0', 77, 'debit', -10, 'booked bet on #[38] Sri Lanka-toss', 'success'),
+(67, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
+(68, '0', 77, 'debit', -10, 'booked bet on #[38] Sri Lanka-result', 'success');
 
 -- --------------------------------------------------------
 
@@ -261,7 +332,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `mobile`, `email`, `token`, `wallet`, `actualname`, `accountNo`, `ifscCode`, `isVerified`, `isOnline`, `visits`, `status`) VALUES
-(77, 'Er Chaan', '1000000000', 'alone8street@gmail.com', 'ya29.A0ARrdaM-NYSPYPWBeQED8j38rqBlE63r_mZ0dugRQJgEHWZjfgqs8uNZPyGT2GG9ihJhBFVLhqkcEBF9JdARu2IDolFjliCCMjFuOj3vcNjdKUNNDNPOcXye1-D48Ny4g4Kyw9dfOo5izUlTOsfnqrnnH9kARzw', 300.43, 'Unknown', 10133323, 'fdgeergfdrfg', 1, 1, 30, 'active'),
+(77, 'Er Chaan', '1000000000', 'alone8street@gmail.com', 'ya29.A0ARrdaM8jMgmzRN6tO-uAYdkD6Dl0rccLBpXwQNJics-ks-B_KLoGAi_T05aaLntqHpAFQOflcbvnWw1sxil_q_wVd6iHO20u_DeXmEmoQyAdRmxVoE6LV07XBq43vvWsSZgUuE6x8e8rv4sqw2x4qtiMWJmczg', 390, 'Unknown', 10133323, 'fdgeergfdrfg', 1, 1, 32, 'active'),
 (78, 'er- Chaan', '0', 'er.chandreshbhai@gmail.com', 'ya29.A0ARrdaM8Ep4W9pomKbakiYz8DEO9CXJ7jV0qWKYfkCUcfJedrkAvMa2PN-iRsLNMPFrlkF4U9_-5TyIRleXN_15Qj1MEqY5BPsp9bls1DevxxUKCU33tJSKfGfZqwmoS7SUogseQ3_W6Sld8xBA7sw3LfwOfa2g', 50, 'unknown', 0, '0', 0, 1, 1, 'active');
 
 --
@@ -320,7 +391,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bets`
 --
 ALTER TABLE `bets`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `board`
@@ -332,7 +403,7 @@ ALTER TABLE `board`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `support`
@@ -344,13 +415,13 @@ ALTER TABLE `support`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `transactions_users`
 --
 ALTER TABLE `transactions_users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `users`

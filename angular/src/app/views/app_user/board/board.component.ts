@@ -135,7 +135,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   placeBet(type, bid, team, template) {
     this.amount = 10;
     this.betData.type = type;
-    this.betData.amount = this.amount;
+    this.betData.uid = this.userObj.uid;
     this.betData.bid = bid;
     this.betData.team = team;
     this.openModal(template);
@@ -150,10 +150,9 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
 
-  onSubmit() {
-    console.log(this.betData);
-    // return
+  onSubmit() {  
     this.spinner.show();
+    this.betData.amount = this.amount;
     this.api.placeBet(this.betData).subscribe(
       (response) => {
         if (response.status) {
