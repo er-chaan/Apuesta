@@ -7,6 +7,9 @@
                     <i class="fa fa-refresh pull-right pointer" (click)="getBetsByUid()"></i>
                 </div>
                 <div class="card-body">
+                    <div *ngIf="!betsByUidData.length">
+                        No Data
+                    </div>
                     <div class="table-responsive">
                         <table *ngIf="betsByUidData.length" datatable [dtOptions]="dtOptions"
                             class="table table-sm">

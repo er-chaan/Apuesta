@@ -7,6 +7,9 @@
                     <i class="fa fa-refresh pull-right pointer" (click)="getTransactionsById()"></i>
                 </div>
                 <div class="card-body">
+                    <div *ngIf="!transactionsByIdData.length">
+                        No Data
+                    </div>
                     <div class="table-responsive">
                         <table *ngIf="transactionsByIdData.length" datatable [dtOptions]="dtOptions"
                             class="table table-sm">
