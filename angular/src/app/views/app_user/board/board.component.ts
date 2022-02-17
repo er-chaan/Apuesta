@@ -25,6 +25,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   s2: any;
   s3: any;
   ngOnInit(): void {
+    this.userObj = JSON.parse(sessionStorage.getItem("user"));
+    this.getUserByEmail();
     this.getBoardByStatusInProgress();
     this.getBoardByStatusUpcoming();
     this.getBoardByStatusCompleted();
@@ -38,8 +40,25 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.s3 = setInterval(() => {
       this.getBoardByStatusCompleted();
     }, 30000);
+
   }
 
+  userObj: any;
+  userByEmailData: any = [];
+  getUserByEmail() {
+    this.spinner.show();
+    this.api.userGetByEmail(this.userObj.email).subscribe(
+      (response) => {
+        if (response.status) {
+          this.userByEmailData = response.data;
+        }
+        else {
+          this.toastr.error(response.error, 'API Error');
+        }
+        this.spinner.hide();
+      }
+    )
+  }
   // boardSub: Subscription;
   // boardData: any = [];
   // getBoard() {
@@ -109,11 +128,16 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
+  betData: any = {};
   amount: number = 10;
   minAmt: number = 10;
   maxAmt: number = 100000;
   placeBet(type, bid, team, template) {
-    alert(type)
+    this.amount = 10;
+    this.betData.type = type;
+    this.betData.amount = this.amount;
+    this.betData.bid = bid;
+    this.betData.team = team;
     this.openModal(template);
   }
 
@@ -125,8 +149,23 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.modalRef = this.modalService.show(template, modalOptions);
   }
 
-  onSubmit(){
-    
+
+  onSubmit() {
+    console.log(this.betData);
+    // return
+    this.spinner.show();
+    this.api.placeBet(this.betData).subscribe(
+      (response) => {
+        if (response.status) {
+          this.toastr.success('Success');
+          this.modalService.hide();
+        }
+        else {
+          this.toastr.error(response.error, 'API Error');
+        }
+        this.spinner.hide();
+      }
+    );
   }
 
 

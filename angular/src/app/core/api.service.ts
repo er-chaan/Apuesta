@@ -47,5 +47,7 @@ export class ApiService {
   cashIn(data: any): Observable<any> {
     return this.httpClient.post<any>(this.api + "/wallet/cashin", data);
   }
-
+  placeBet(data: any): Observable<any> {
+    return this.httpClient.post<any>(this.api + "/bets", data);
+  }
 }

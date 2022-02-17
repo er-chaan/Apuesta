@@ -139,8 +139,8 @@
                                         {{x.teamA}}
                                     </b>
                                     <div class="text-center">
-                                        <button (click)="placeBet('toss',x.id,x.teamA,template)" style="width:100%" type="button"
-                                            class="btn btn-light btn-sm btn-pill btn-outline">Toss :
+                                        <button (click)="placeBet('toss',x.id,x.teamA,template)" style="width:100%"
+                                            type="button" class="btn btn-light btn-sm btn-pill btn-outline">Toss :
                                             {{x.rateTossTeamA}}</button>
                                         <button (click)="placeBet('result',x.id,x.teamA,template)" style="width:100%"
                                             type="button" class="btn btn-dark btn-sm btn-pill btn-outline">Result :
@@ -161,8 +161,8 @@
                                         {{x.teamB}}
                                     </b>
                                     <div class="text-center">
-                                        <button (click)="placeBet('toss',x.id,x.teamB,template)" style="width:100%" type="button"
-                                            class="btn btn-light btn-sm btn-pill btn-outline">Toss :
+                                        <button (click)="placeBet('toss',x.id,x.teamB,template)" style="width:100%"
+                                            type="button" class="btn btn-light btn-sm btn-pill btn-outline">Toss :
                                             {{x.rateTossTeamB}}</button>
                                         <button (click)="placeBet('result',x.id,x.teamB,template)" style="width:100%"
                                             type="button" class="btn btn-dark btn-sm btn-pill btn-outline">Result :
@@ -196,24 +196,18 @@
     </div>
     <div class="modal-body">
         <h5 style="width: 100%; text-align: left;">
-            <table>
-                <tr>
-                    <td>Account Holder Name :</td>
-                    <!-- <td><b>{{userByEmailData.actualname}}</b></td> -->
-                </tr>
-                <tr>
-                    <td>Account Number :</td>
-                    <!-- <td><b>{{userByEmailData.accountNo}}</b></td> -->
-                </tr>
-                <tr>
-                    <td>IFSC Code :</td>
-                    <!-- <td><b>{{userByEmailData.ifscCode}}</b></td> -->
-                </tr>
-            </table>
+            <div class="row">
+                <div class="col-lg-6">
+                    <td class="pull-left">Team : {{betData.team | uppercase}}</td>
+                </div>
+                <div class="col-lg-6">
+                    <td class="pull-left">Type : {{betData.type | uppercase}}</td>
+                </div>
+            </div>
         </h5>
         <h1>
             <input style="width: 100%; text-align: right;" autocomplete="off" [min]="minAmt" [max]="maxAmt"
-                  type="number" [(ngModel)]="amount">
+                type="number" [(ngModel)]="amount">
         </h1>
         <div *ngIf="!amount" class="errorMsg">
             <div>Amount required.</div>
@@ -227,11 +221,13 @@
         <div *ngIf="amount % 1 !== 0" class="errorMsg">
             <div>Decimal amount not allowed.</div>
         </div>
+        <div *ngIf="amount > userByEmailData.wallet" class="errorMsg">
+            <div>Innsufficiant balance in wallet.</div>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
-        <button
-            [disabled]="(amount % 1 !== 0) || (!amount) || (minAmt > amount) || (amount > maxAmt)"
-            type="button" class="btn btn-info" (click)="onSubmit()">Confirm</button>
+        <button [disabled]="(amount % 1 !== 0) || (!amount) || (minAmt > amount) || (amount > maxAmt) || (amount > userByEmailData.wallet)" type="button"
+            class="btn btn-info" (click)="onSubmit()">Confirm</button>
     </div>
 </ng-template>
