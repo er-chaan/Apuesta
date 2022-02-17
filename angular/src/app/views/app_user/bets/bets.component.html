@@ -1,1 +1,43 @@
-<p>bets works!</p>
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Bets
+                    <i class="fa fa-refresh pull-right pointer" (click)="getBetsByUid()"></i>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table *ngIf="betsByUidData.length" datatable [dtOptions]="dtOptions"
+                            class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Team</th>
+                                    <th>Type</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let x of betsByUidData">
+                                    <td>{{x.updatedAt | date : 'short'}}</td>
+                                    <td>{{x.team}}</td>
+                                    <td>{{x.type}}</td>
+                                    <td>{{x.rate}}</td>
+                                    <td>{{x.amount}}</td>
+                                    <td>
+                                        <span *ngIf="x.status == 'booked'" class="badge badge-warning">{{x.status}}</span>
+                                        <span *ngIf="x.status == 'won'" class="badge badge-success">{{x.status}}</span>
+                                        <span *ngIf="x.status == 'lost'" class="badge badge-danger">{{x.status}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

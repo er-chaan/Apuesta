@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 17, 2022 at 09:47 PM
+-- Generation Time: Feb 18, 2022 at 12:15 AM
 -- Server version: 8.0.27-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -39,16 +39,6 @@ CREATE TABLE `bets` (
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('booked','won','lost','') NOT NULL DEFAULT 'booked'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `bets`
---
-
-INSERT INTO `bets` (`id`, `uid`, `bid`, `type`, `team`, `rate`, `amount`, `status`) VALUES
-(1, 77, 38, 'toss', 'Australia', 1.2, 10, 'booked'),
-(2, 77, 38, 'toss', 'Sri Lanka', 1.3, 10, 'booked'),
-(3, 77, 38, 'result', 'Australia', 1.4, 10, 'booked'),
-(4, 77, 38, 'result', 'Sri Lanka', 1.5, 10, 'booked');
 
 -- --------------------------------------------------------
 
@@ -106,43 +96,6 @@ CREATE TABLE `notifications` (
   `status` enum('active','inactive') NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `notifications`
---
-
-INSERT INTO `notifications` (`id`, `forAdmin`, `title`, `description`, `status`) VALUES
-(1, 0, 'titleeeeee', 'descccccccccc', 'active'),
-(2, 0, 'titleeeeee', 'descccccccccc', 'active'),
-(3, 0, 'titleeeeee', 'descccccccccc', 'active'),
-(4, 0, 'titleeeeee', 'descccccccccc', 'active'),
-(5, 0, 'titleeeeee', 'descccccccccc', 'active'),
-(6, 0, 'titleeeeee', 'descccccccccc', 'active'),
-(7, 0, 'titleeeeee', 'descccccccccc', 'active'),
-(8, 0, 'titleeeeee', 'descccccccccc', 'inactive'),
-(10, 1, 'Insufficiant Fund in API', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is -10.80', 'active'),
-(11, 1, 'Insufficiant Fund in API', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is -10.80', 'active'),
-(12, 1, 'Insufficiant Fund in API', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is -10.80', 'active'),
-(13, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
-(14, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
-(15, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
-(16, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 150.5 but API Fund is undefined', 'active'),
-(17, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 150.5 but API Fund is undefined', 'active'),
-(18, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 150.2 but API Fund is undefined', 'active'),
-(19, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
-(20, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
-(21, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100 but API Fund is undefined', 'active'),
-(22, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 50 but API Fund is undefined', 'active'),
-(23, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 50 but API Fund is undefined', 'active'),
-(24, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 50 but API Fund is undefined', 'active'),
-(25, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 50 but API Fund is undefined', 'active'),
-(26, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.43 but API Fund is undefined', 'active'),
-(27, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.34 but API Fund is undefined', 'active'),
-(28, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 100.23 but API Fund is undefined', 'active'),
-(29, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 10 but API Fund is undefined', 'active'),
-(30, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 110 but API Fund is undefined', 'active'),
-(31, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 110 but API Fund is undefined', 'active'),
-(32, 1, 'Insufficient API balance', 'CashOUT - Transaction Failed : alone8street@gmail.com of 10 but API Fund is undefined', 'active');
-
 -- --------------------------------------------------------
 
 --
@@ -160,17 +113,6 @@ CREATE TABLE `support` (
   `status` enum('pending','resolved') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `support`
---
-
-INSERT INTO `support` (`id`, `email`, `issue`, `description`, `resolution`, `createdAt`, `status`) VALUES
-(16, 'alone8street@gmail.com', 'Bet', 'drsgvdf', 'procedure explained', '2022-02-10 07:53:42', 'resolved'),
-(17, 'alone8street@gmail.com', 'Bet', 'dfvdf', 'In Progress', '2022-02-10 07:53:48', 'pending'),
-(18, 'alone8street@gmail.com', 'Bet', 'dfbvdf', 'In Progress', '2022-02-10 07:55:52', 'pending'),
-(19, 'alone8street@gmail.com', 'Transactions', 'hjh', 'In Progress', '2022-02-10 11:28:23', 'pending'),
-(20, 'alone8street@gmail.com', 'Deposit', 'hkjbk', 'In Progress', '2022-02-11 11:23:29', 'pending');
-
 -- --------------------------------------------------------
 
 --
@@ -186,42 +128,6 @@ CREATE TABLE `transactions` (
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('success','failed') NOT NULL DEFAULT 'success'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `transactions`
---
-
-INSERT INTO `transactions` (`id`, `uid`, `mode`, `amount`, `description`, `status`) VALUES
-(5, 75, 'debit', -50, 'Welcome Bonus To : alone8street@gmail.com', 'success'),
-(6, 76, 'debit', -50, 'Welcome Bonus To : alone8street@gmail.com', 'success'),
-(7, 77, 'debit', -50, 'Welcome Bonus To : alone8street@gmail.com', 'success'),
-(8, 78, 'debit', -50, 'Welcome Bonus To : er.chandreshbhai@gmail.com', 'success'),
-(9, 77, 'credit', 50, 'booked bet on [39] India-result', 'success'),
-(10, 77, 'credit', 25, 'booked bet on [40] Australia-toss', 'success'),
-(11, 77, 'credit', 40, 'booked bet on #[38] Australia-result', 'success'),
-(12, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(13, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(14, 77, 'credit', 10, 'booked bet on #[38] Australia-toss', 'success'),
-(15, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(16, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(17, 77, 'credit', 10, 'booked bet on #[38] Sri Lanka-result', 'success'),
-(18, 77, 'credit', 10, 'booked bet on #[39] West Indies-result', 'success'),
-(19, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(20, 77, 'credit', 10, 'booked bet on #[39] India-result', 'success'),
-(21, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(22, 77, 'credit', 10, 'booked bet on #[39] India-result', 'success'),
-(23, 77, 'credit', 10, 'booked bet on #[39] India-result', 'success'),
-(24, 77, 'credit', 10, 'booked bet on #[39] India-toss', 'success'),
-(25, 77, 'credit', 10, 'booked bet on #[38] Sri Lanka-result', 'success'),
-(26, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(27, 77, 'credit', 10, 'booked bet on #[39] West Indies-result', 'success'),
-(28, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(29, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(30, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(31, 77, 'credit', 10, 'booked bet on #[38] Australia-toss', 'success'),
-(32, 77, 'credit', 10, 'booked bet on #[38] Sri Lanka-toss', 'success'),
-(33, 77, 'credit', 10, 'booked bet on #[38] Australia-result', 'success'),
-(34, 77, 'credit', 10, 'booked bet on #[38] Sri Lanka-result', 'success');
 
 -- --------------------------------------------------------
 
@@ -239,70 +145,6 @@ CREATE TABLE `transactions_users` (
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('success','failed') NOT NULL DEFAULT 'success'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `transactions_users`
---
-
-INSERT INTO `transactions_users` (`id`, `oid`, `uid`, `mode`, `amount`, `description`, `status`) VALUES
-(10, '0', 75, 'credit', 50, 'Welcome Bonus', 'success'),
-(12, '0', 75, 'credit', 34, 'fhbfgth', 'success'),
-(13, '0', 76, 'credit', 50, 'Welcome Bonus', 'success'),
-(14, '0', 77, 'credit', 50, 'Welcome Bonus', 'success'),
-(15, '0', 77, 'debit', 100, 'Withdraw', 'success'),
-(16, '0', 77, 'debit', -100, 'Withdraw', 'success'),
-(17, '0', 77, 'debit', -100, 'Withdraw', 'success'),
-(18, '0', 77, 'debit', -150, 'Withdraw', 'success'),
-(19, '0', 77, 'debit', -50, 'Withdraw', 'success'),
-(20, '0', 77, 'debit', -100, 'Withdraw', 'success'),
-(21, '77_1644667822', 77, 'credit', 100, 'Deposit', 'success'),
-(22, '77_1644668269', 77, 'credit', 100, 'Deposit', 'success'),
-(23, '77_1644668387', 77, 'credit', 100.43, 'Deposit', 'success'),
-(24, '0', 77, 'debit', -100, 'Withdraw', 'success'),
-(25, '0', 77, 'debit', -100, 'Withdraw', 'success'),
-(26, 'mta_1644668695', 77, 'debit', -100, 'Withdraw', 'success'),
-(27, '77_1644669385', 77, 'credit', 100, 'Deposit', 'success'),
-(28, 'mta_1644669720', 77, 'debit', -100, 'Withdraw', 'success'),
-(29, '77_1644669995', 77, 'credit', 100, 'Deposit', 'success'),
-(30, 'mta_1644670209', 77, 'debit', -100, 'Withdraw', 'success'),
-(31, '77_1644690601', 77, 'credit', 100, 'Deposit', 'success'),
-(32, '77_1644691516', 77, 'credit', 10, 'Deposit', 'success'),
-(33, '77_1644948353', 77, 'credit', 10, 'Deposit', 'success'),
-(34, 'mta_1644948480', 77, 'debit', -10, 'Withdraw', 'success'),
-(35, 'mta_1644948488', 77, 'debit', -10, 'Withdraw', 'success'),
-(36, '0', 78, 'credit', 50, 'Welcome Bonus', 'success'),
-(37, '0', 77, 'debit', -10, 'booked bet on [38] Sri Lanka-toss', 'success'),
-(38, '0', 77, 'debit', -10, 'booked bet on [38] Sri Lanka-toss', 'success'),
-(39, '0', 77, 'credit', 10, 'booked bet on [38] Sri Lanka-toss', 'success'),
-(40, '0', 77, 'debit', -50, 'booked bet on [39] India-result', 'success'),
-(41, '0', 77, 'debit', -25, 'booked bet on [40] Australia-toss', 'success'),
-(42, '0', 77, 'debit', -40, 'booked bet on #[38] Australia-result', 'success'),
-(43, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(44, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(45, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-toss', 'success'),
-(46, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(47, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(48, '0', 77, 'debit', -10, 'booked bet on #[38] Sri Lanka-result', 'success'),
-(49, '0', 77, 'debit', -10, 'booked bet on #[39] West Indies-result', 'success'),
-(50, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(51, '0', 77, 'debit', -10, 'booked bet on #[39] India-result', 'success'),
-(52, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(53, '0', 77, 'debit', -10, 'booked bet on #[39] India-result', 'success'),
-(54, '0', 77, 'debit', -10, 'booked bet on #[39] India-result', 'success'),
-(55, '0', 77, 'debit', -10, 'booked bet on #[39] India-toss', 'success'),
-(56, '0', 77, 'debit', -10, 'booked bet on #[38] Sri Lanka-result', 'success'),
-(57, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(58, '0', 77, 'debit', -10, 'booked bet on #[39] West Indies-result', 'success'),
-(59, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(60, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(61, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(62, '77_1645113697', 77, 'credit', 10, 'Deposit', 'success'),
-(63, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-toss', 'success'),
-(64, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-toss', 'success'),
-(65, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-toss', 'success'),
-(66, '0', 77, 'debit', -10, 'booked bet on #[38] Sri Lanka-toss', 'success'),
-(67, '0', 77, 'debit', -10, 'booked bet on #[38] Australia-result', 'success'),
-(68, '0', 77, 'debit', -10, 'booked bet on #[38] Sri Lanka-result', 'success');
 
 -- --------------------------------------------------------
 
@@ -332,8 +174,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `mobile`, `email`, `token`, `wallet`, `actualname`, `accountNo`, `ifscCode`, `isVerified`, `isOnline`, `visits`, `status`) VALUES
-(77, 'Er Chaan', '1000000000', 'alone8street@gmail.com', 'ya29.A0ARrdaM8jMgmzRN6tO-uAYdkD6Dl0rccLBpXwQNJics-ks-B_KLoGAi_T05aaLntqHpAFQOflcbvnWw1sxil_q_wVd6iHO20u_DeXmEmoQyAdRmxVoE6LV07XBq43vvWsSZgUuE6x8e8rv4sqw2x4qtiMWJmczg', 390, 'Unknown', 10133323, 'fdgeergfdrfg', 1, 1, 32, 'active'),
-(78, 'er- Chaan', '0', 'er.chandreshbhai@gmail.com', 'ya29.A0ARrdaM8Ep4W9pomKbakiYz8DEO9CXJ7jV0qWKYfkCUcfJedrkAvMa2PN-iRsLNMPFrlkF4U9_-5TyIRleXN_15Qj1MEqY5BPsp9bls1DevxxUKCU33tJSKfGfZqwmoS7SUogseQ3_W6Sld8xBA7sw3LfwOfa2g', 50, 'unknown', 0, '0', 0, 1, 1, 'active');
+(77, 'Er Chaan', '1000000000', 'alone8street@gmail.com', 'ya29.A0ARrdaM-9NvwUYcbEm1jj_DAXCYtRDE1GiSo-4kNS5Txw3v5sF7lGGvAD60OQN3U8ErptbtnDp5pzVQPukEsO_De5svWDpf3bEGFG1YH3fMIV7MyVwxPP87LQaoUFuumZKIyT4O5_gx4fHO8RZ6-A2DPVu4dnVA', 370, 'Unknown', 10133323, 'fdgeergfdrfg', 1, 1, 37, 'active');
 
 --
 -- Indexes for dumped tables
@@ -391,7 +232,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bets`
 --
 ALTER TABLE `bets`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `board`
@@ -415,13 +256,13 @@ ALTER TABLE `support`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `transactions_users`
 --
 ALTER TABLE `transactions_users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

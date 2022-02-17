@@ -5,7 +5,9 @@ import { Observable } from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiService {
+
   api: any;
   constructor(private httpClient: HttpClient) {
     this.api = "http://localhost:3000";
@@ -50,4 +52,8 @@ export class ApiService {
   placeBet(data: any): Observable<any> {
     return this.httpClient.post<any>(this.api + "/bets", data);
   }
+  betsGetByUid(uid: any): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/bets/" + uid);
+  }
+
 }

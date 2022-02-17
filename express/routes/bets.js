@@ -28,7 +28,21 @@ router.post('/', function (req, res) {
                     } else {
                         var diff = Math.round(Math.abs(new Date(resultsX[0].startsAt) - new Date()) / 60000);
                         if (diff > 30) {
-
+                            if (resultsX[0].teamA == req.body.team && req.body.type == "toss") {
+                                rate = resultsX[0].rateTossTeamA;
+                            }
+                            if (resultsX[0].teamA == req.body.team && req.body.type == "result") {
+                                rate = resultsX[0].rateWinnerTeamA;
+                            }
+                            if (resultsX[0].teamB == req.body.team && req.body.type == "toss") {
+                                rate = resultsX[0].rateTossTeamB;
+                            }
+                            if (resultsX[0].teamB == req.body.team && req.body.type == "result") {
+                                rate = resultsX[0].rateWinnerTeamB;
+                            }
+                            if (rate == 0) {
+                                return res.status(200).send({ status: false, error: "Rate not freezed yet. try later." });
+                            }
                             // -----------------------------
                             sql = "UPDATE users SET wallet=wallet-" + req.body.amount + " WHERE id=" + req.body.uid + "";
                             dbConn.query(sql, null, function (error, results, fields) {
@@ -42,20 +56,8 @@ router.post('/', function (req, res) {
                                     scripts = `INSERT INTO transactions(uid, mode, amount, description) 
                                                     VALUES(${req.body.uid},'credit', ${req.body.amount}, '${description}');`;
                                     dbConn.query(scripts);
-                                    if(resultsX[0].teamA == req.body.team && req.body.type == "toss"){
-                                        rate = resultsX[0].rateTossTeamA;
-                                    }
-                                    if(resultsX[0].teamA == req.body.team && req.body.type == "result"){
-                                        rate = resultsX[0].rateWinnerTeamA;
-                                    }
-                                    if(resultsX[0].teamB == req.body.team && req.body.type == "toss"){
-                                        rate = resultsX[0].rateTossTeamB;
-                                    }
-                                    if(resultsX[0].teamB == req.body.team && req.body.type == "result"){
-                                        rate = resultsX[0].rateWinnerTeamB;
-                                    }
                                     var sql = `INSERT INTO bets (rate, team, type, uid, bid, amount) 
-                                                    VALUES (`+rate+`,'`+ req.body.team.trim() + `','` + req.body.type.trim() + `',` + req.body.uid + `,` + req.body.bid + `,` + req.body.amount + `  )`;
+                                                    VALUES (`+ rate + `,'` + req.body.team.trim() + `','` + req.body.type.trim() + `',` + req.body.uid + `,` + req.body.bid + `,` + req.body.amount + `  )`;
                                     dbConn.query(sql, function (error, results, fields) {
                                         if (error) {
                                             return res.status(200).send({ status: false, error: error.sqlMessage });
