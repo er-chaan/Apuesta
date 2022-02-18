@@ -132,7 +132,11 @@ export class BoardComponent implements OnInit, OnDestroy {
   amount: number = 10;
   minAmt: number = 10;
   maxAmt: number = 100000;
-  placeBet(type, bid, team, template) {
+  placeBet(type, bid, team, template, rate) {
+    if (rate == 0) {
+      this.toastr.error('Rate not freezed yet. try later.');
+      return
+    }
     this.amount = 10;
     this.betData.type = type;
     this.betData.uid = this.userObj.uid;
@@ -150,7 +154,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
 
-  onSubmit() {  
+  onSubmit() {
     this.spinner.show();
     this.betData.amount = this.amount;
     this.api.placeBet(this.betData).subscribe(

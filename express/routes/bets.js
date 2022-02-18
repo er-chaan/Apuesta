@@ -26,7 +26,7 @@ router.post('/', function (req, res) {
                     if (error) {
                         return res.status(200).send({ status: false, error: error.sqlMessage });
                     } else {
-                        var diff = Math.round(Math.abs(new Date(resultsX[0].startsAt) - new Date()) / 60000);
+                        var diff = Math.round((new Date(resultsX[0].startsAt) - new Date()) / 60000);
                         if (diff > 30) {
                             if (resultsX[0].teamA == req.body.team && req.body.type == "toss") {
                                 rate = resultsX[0].rateTossTeamA;

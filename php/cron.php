@@ -48,16 +48,33 @@ if (!$response->ResponseError) {
             }
             $scoreA = "0-0(0)";
             $scoreB = "0-0(0)";
-            if (($row['teamA'] == $toss) && $value->TossDecision == "Bat") {
-                $scoreA = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
+            if ((($row['teamA'] == $toss) && ($value->TossDecision == "Bat")) || (($row['teamB'] == $toss) && ($value->TossDecision == "Field"))) {
+                if (sizeof($value->Innings) > 0) {
+                    $scoreA = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
+                }
                 if (sizeof($value->Innings) > 1) {
                     $scoreB = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
                 }
-            } else {
+                if (sizeof($value->Innings) > 2) {
+                    $scoreA = $scoreA . " & " . $value->Innings[2]->RunsScored . "-" . $value->Innings[2]->NumberOfWicketsFallen . "(" . $value->Innings[2]->OversBowled . ")";
+                }
+                if (sizeof($value->Innings) > 3) {
+                    $scoreB = $scoreB . " & " . $value->Innings[3]->RunsScored . "-" . $value->Innings[3]->NumberOfWicketsFallen . "(" . $value->Innings[3]->OversBowled . ")";
+                }
+            }
+            if ((($row['teamA'] == $toss) && ($value->TossDecision == "Field")) || (($row['teamB'] == $toss) && ($value->TossDecision == "Bat"))) {
+                if (sizeof($value->Innings) > 0) {
+                    $scoreB = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
+                }
                 if (sizeof($value->Innings) > 1) {
                     $scoreA = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
                 }
-                $scoreB = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
+                if (sizeof($value->Innings) > 2) {
+                    $scoreB = $scoreB . " & " . $value->Innings[2]->RunsScored . "-" . $value->Innings[2]->NumberOfWicketsFallen . "(" . $value->Innings[2]->OversBowled . ")";
+                }
+                if (sizeof($value->Innings) > 3) {
+                    $scoreA = $scoreA . " & " . $value->Innings[3]->RunsScored . "-" . $value->Innings[3]->NumberOfWicketsFallen . "(" . $value->Innings[3]->OversBowled . ")";
+                }
             }
 
             $values = " status='inProgress', isLive=1, resultText='" . $value->ResultText . "', tossDecision='" . $value->TossDecision . "' ,toss='" . $toss . "', scoreA='" . $scoreA . "', scoreB='" . $scoreB . "' ";
@@ -77,18 +94,44 @@ if (!$response->ResponseError) {
             if (strpos($value->ResultText, $row['teamB']) !== false) {
                 $winner = $row['teamB'];
             }
-            if (($row['teamA'] == $row['toss']) && $value->TossDecision == "Bat") {
-                $scoreA = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
-                $scoreB = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
-            } else {
-                $scoreA = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
-                $scoreB = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
+            if($winner != $row['teamA'] && $winner != $row['teamB'] ){
+                $winner = "No Result";
             }
             if (strpos($value->TossResult, $row['teamA']) !== false) {
                 $toss = $row['teamA'];
             }
             if (strpos($value->TossResult, $row['teamB']) !== false) {
                 $toss = $row['teamB'];
+            }
+            $scoreA = "0-0(0)";
+            $scoreB = "0-0(0)";
+            if ((($row['teamA'] == $toss) && ($value->TossDecision == "Bat")) || (($row['teamB'] == $toss) && ($value->TossDecision == "Field"))) {
+                if (sizeof($value->Innings) > 0) {
+                    $scoreA = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
+                }
+                if (sizeof($value->Innings) > 1) {
+                    $scoreB = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
+                }
+                if (sizeof($value->Innings) > 2) {
+                    $scoreA = $scoreA . " & " . $value->Innings[2]->RunsScored . "-" . $value->Innings[2]->NumberOfWicketsFallen . "(" . $value->Innings[2]->OversBowled . ")";
+                }
+                if (sizeof($value->Innings) > 3) {
+                    $scoreB = $scoreB . " & " . $value->Innings[3]->RunsScored . "-" . $value->Innings[3]->NumberOfWicketsFallen . "(" . $value->Innings[3]->OversBowled . ")";
+                }
+            }
+            if ((($row['teamA'] == $toss) && ($value->TossDecision == "Field")) || (($row['teamB'] == $toss) && ($value->TossDecision == "Bat"))) {
+                if (sizeof($value->Innings) > 0) {
+                    $scoreB = $value->Innings[0]->RunsScored . "-" . $value->Innings[0]->NumberOfWicketsFallen . "(" . $value->Innings[0]->OversBowled . ")";
+                }
+                if (sizeof($value->Innings) > 1) {
+                    $scoreA = $value->Innings[1]->RunsScored . "-" . $value->Innings[1]->NumberOfWicketsFallen . "(" . $value->Innings[1]->OversBowled . ")";
+                }
+                if (sizeof($value->Innings) > 2) {
+                    $scoreB = $scoreB . " & " . $value->Innings[2]->RunsScored . "-" . $value->Innings[2]->NumberOfWicketsFallen . "(" . $value->Innings[2]->OversBowled . ")";
+                }
+                if (sizeof($value->Innings) > 3) {
+                    $scoreA = $scoreA . " & " . $value->Innings[3]->RunsScored . "-" . $value->Innings[3]->NumberOfWicketsFallen . "(" . $value->Innings[3]->OversBowled . ")";
+                }
             }
             $values = " status='completed', resultText='" . $value->ResultText . "', tossDecision='" . $value->TossDecision . "', toss='" . $toss . "' ,isLive=0, winner='" . $winner . "', scoreA='" . $scoreA . "', scoreB='" . $scoreB . "' ";
             $update = "UPDATE board SET " . $values . " WHERE apiId=" . $value->Id;
@@ -152,7 +195,7 @@ if ($result->num_rows) {
                 $conn->query($scripts);
 
                 $scripts = "INSERT INTO transactions(uid, mode, amount, description) 
-                              VALUES(" . $value["uid"] . ",'credit'," . -($winningAmt) . ",'" . $description . "');";
+                              VALUES(" . $value["uid"] . ",'credit'," . - ($winningAmt) . ",'" . $description . "');";
                 $conn->query($scripts);
 
                 $update = "UPDATE bets SET " . $values . " WHERE id=" . $value["id"];
