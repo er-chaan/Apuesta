@@ -49,7 +49,7 @@ router.post('/', function (req, res) {
                                 if (error) {
                                     return res.status(200).send({ status: false, error: error.sqlMessage });
                                 } else {
-                                    description = "booked bet on #[" + req.body.bid + "] " + req.body.team + "-" + req.body.type;
+                                    description = "booked bet on #[" + req.body.bid + "] " + req.body.team + "(" + req.body.type +")";
                                     scripts = `INSERT INTO transactions_users(uid, mode, amount, description) 
                                                     VALUES(${req.body.uid},'debit', ${-req.body.amount}, '${description}');`;
                                     dbConn.query(scripts);

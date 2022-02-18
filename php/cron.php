@@ -46,6 +46,9 @@ if (!$response->ResponseError) {
             if (strpos($value->TossResult, $row['teamB']) !== false) {
                 $toss = $row['teamB'];
             }
+            if ($toss != $row['teamA'] && $toss != $row['teamB']) {
+                $toss = "no result";
+            }
             $scoreA = "0-0(0)";
             $scoreB = "0-0(0)";
             if ((($row['teamA'] == $toss) && ($value->TossDecision == "Bat")) || (($row['teamB'] == $toss) && ($value->TossDecision == "Field"))) {
@@ -94,14 +97,17 @@ if (!$response->ResponseError) {
             if (strpos($value->ResultText, $row['teamB']) !== false) {
                 $winner = $row['teamB'];
             }
-            if($winner != $row['teamA'] && $winner != $row['teamB'] ){
-                $winner = "No Result";
+            if ($winner != $row['teamA'] && $winner != $row['teamB']) {
+                $winner = "no result";
             }
             if (strpos($value->TossResult, $row['teamA']) !== false) {
                 $toss = $row['teamA'];
             }
             if (strpos($value->TossResult, $row['teamB']) !== false) {
                 $toss = $row['teamB'];
+            }
+            if ($toss != $row['teamA'] && $toss != $row['teamB']) {
+                $toss = "no result";
             }
             $scoreA = "0-0(0)";
             $scoreB = "0-0(0)";
@@ -153,9 +159,7 @@ if (!$response->ResponseError) {
 $sql = "SELECT * FROM bets WHERE status='booked'";
 $result = $conn->query($sql);
 if ($result->num_rows) {
-    // var_dump($result);
     foreach ($result as $key => $value) {
-        // echo "\n" . $value["bid"] . "-" . $value["type"];
         $sql = "SELECT * FROM board WHERE (status='completed' OR status='inProgress') AND id=" . $value["bid"] . "";
         $result = $conn->query($sql);
         if ($result->num_rows == 1) {
@@ -163,12 +167,14 @@ if ($result->num_rows) {
             $winningAmt = null;
             $description = null;
             $row = mysqli_fetch_assoc($result);
-            // echo "\n" . $row["winner"] . "-" . $row["toss"];
-            if ($value["type"] == "toss" && $row["status"] == "inProgress") {
+            if ($value["type"] == "toss") {
                 if ($value["team"] == $row["toss"]) {
                     $status = "won";
                 } else {
                     $status = "lost";
+                }
+                if ($row["toss"] == "no result") {
+                    $status = "no result";
                 }
             }
             if ($value["type"] == "result" && $row["status"] == "completed") {
@@ -177,31 +183,43 @@ if ($result->num_rows) {
                 } else {
                     $status = "lost";
                 }
+                if ($row["winner"] == "no result") {
+                    $status = "no result";
+                }
             }
-            // to check status inprogress and 0 entry in toss gived weird result
             if ($status) {
                 $values = "status='" . $status . "' ";
                 $update = "UPDATE bets SET " . $values . " WHERE id=" . $value["id"];
                 $conn->query($update);
+                echo $update."\n";
             }
             if ($status == "won") {
                 $winningAmt = $value["rate"] * $value["amount"];
                 $update = "UPDATE users SET wallet= wallet+" . $winningAmt . " WHERE id=" . $value["uid"];
                 $conn->query($update);
 
-                $description = "won bet on #[" . $value["bid"] .  "] " . $value["team"] . "-" . $value["type"];
+                $description = "won bet on #[" . $value["bid"] .  "] " . $value["team"] . "(" . $value["type"] . ")";
                 $scripts = "INSERT INTO transactions_users(uid, mode, amount, description) 
                                 VALUES(" . $value["uid"] . ",'credit'," . $winningAmt . ",'" . $description . "');";
                 $conn->query($scripts);
 
                 $scripts = "INSERT INTO transactions(uid, mode, amount, description) 
-                              VALUES(" . $value["uid"] . ",'credit'," . - ($winningAmt) . ",'" . $description . "');";
+                              VALUES(" . $value["uid"] . ",'debit'," . - ($winningAmt) . ",'" . $description . "');";
+                $conn->query($scripts);
+            }
+            if ($status == "no result") {
+                $winningAmt = $value["amount"];
+                $update = "UPDATE users SET wallet= wallet+" . $winningAmt . " WHERE id=" . $value["uid"];
+                $conn->query($update);
+
+                $description = "refund bet on #[" . $value["bid"] .  "] " . $value["team"] . "(" . $value["type"] . ")";
+                $scripts = "INSERT INTO transactions_users(uid, mode, amount, description) 
+                                VALUES(" . $value["uid"] . ",'credit'," . $winningAmt . ",'" . $description . "');";
                 $conn->query($scripts);
 
-                $update = "UPDATE bets SET " . $values . " WHERE id=" . $value["id"];
-                $conn->query($update);
-                $update = "UPDATE bets SET " . $values . " WHERE id=" . $value["id"];
-                $conn->query($update);
+                $scripts = "INSERT INTO transactions(uid, mode, amount, description) 
+                              VALUES(" . $value["uid"] . ",'debit'," . - ($winningAmt) . ",'" . $description . "');";
+                $conn->query($scripts);
             }
         }
     }
