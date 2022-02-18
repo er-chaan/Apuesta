@@ -56,7 +56,7 @@ export class InterceptorService implements HttpInterceptor {
           if (error.status == 401) {
             sessionStorage.clear();
             this.router.navigate(['/landing']);
-            this.toastr.error('intrusion detected', 'ALERT');
+            this.toastr.error('session cleaned', 'ALERT');
           }
         }
       )
