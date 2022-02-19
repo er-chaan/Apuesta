@@ -172,4 +172,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
 
+  trackFunction(index: number, element: any) {
+    return element ? element.id : null
+  }
+
 }

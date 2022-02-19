@@ -10,7 +10,7 @@
                     {{noDataMsg}}
                 </div>
                 <div class="card-body" *ngIf="boardInProgressData.length">
-                    <div *ngFor="let x of boardInProgressData">
+                    <div *ngFor="let x of boardInProgressData; trackBy: trackFunction">
                         <div class="row" style="background-color:gainsboro;">
                             <div class="col-lg-12">
                                 <!-- <div class="text-center">{{x.startsAt | date:'medium'}}</div> -->
@@ -67,7 +67,7 @@
                     {{noDataMsg}}
                 </div>
                 <div class="card-body" *ngIf="boardCompletedData.length">
-                    <div *ngFor="let x of boardCompletedData">
+                    <div *ngFor="let x of boardCompletedData; trackBy: trackFunction">
                         <div class="row" style="background-color:gainsboro;">
                             <div class="col-lg-12">
                                 <div class="text-center">{{x.startsAt | date:'medium'}} - #[{{x.id}}]</div>
@@ -124,7 +124,7 @@
                     {{noDataMsg}}
                 </div>
                 <div class="card-body" *ngIf="boardUpcomingData.length">
-                    <div *ngFor="let x of boardUpcomingData">
+                    <div *ngFor="let x of boardUpcomingData; trackBy: trackFunction">
                         <div class="row" style="background-color:gainsboro;">
                             <div class="col-lg-12">
                                 <div class="text-center">{{x.startsAt | date:'medium'}} - #[{{x.id}}]</div>
