@@ -117,6 +117,32 @@ export const routes: Routes = [
     ],
     canActivate: [UsersGuard]
   },
+  {
+    path: 'admin',
+    component: DefaultLayoutComponent,
+    data: {
+      title: 'Admin'
+    },
+    children: [
+      {
+        path: 'board',
+        loadChildren: () => import('./views/app_admin/board/a-board.module').then(m => m.ABoardModule)
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./views/app_admin/dashboard/a-dashboard.module').then(m => m.ADashboardModule)
+      },
+      {
+        path: 'support',
+        loadChildren: () => import('./views/app_admin/support/a-support.module').then(m => m.ASupportModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./views/app_admin/users/a-users.module').then(m => m.AUsersModule)
+      },
+    ],
+    canActivate: [UsersGuard]
+  },
   { path: '**', component: P404Component }
 ];
 

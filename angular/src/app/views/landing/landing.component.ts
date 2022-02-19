@@ -30,17 +30,23 @@ import { ApiService } from "../../core/api.service";
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 })
 export class LandingComponent implements OnInit {
   user: SocialUser;
   loggedIn: boolean;
+  userObj: any;
 
   constructor(private api: ApiService, private spinner: NgxSpinnerService, private toastr: ToastrService, private router: Router, private authService: SocialAuthService) { }
 
   ngOnInit() {
     if (sessionStorage.getItem("token")) {
-      this.router.navigate(["/board"]);
+      this.userObj = JSON.parse(sessionStorage.getItem("user"));
+      if (this.userObj.email == "er.chandreshbhai@gmail.com") {
+        this.router.navigate(["/admin/dashboard"]);
+      }else{
+        this.router.navigate(["/board"]);
+      }
       return
     }
     this.authService.authState.subscribe((user) => {
@@ -55,10 +61,10 @@ export class LandingComponent implements OnInit {
       this.auth();
     }).catch((x) => {
       this.spinner.hide();
-      if(x.error){
+      if (x.error) {
         this.toastr.error(x.error);
-      }else{
-        this.toastr.error(x+" OR try ctrl + F5");
+      } else {
+        this.toastr.error(x + " OR try ctrl + F5");
       }
     });
 
@@ -70,7 +76,12 @@ export class LandingComponent implements OnInit {
         if (response.status) {
           sessionStorage.setItem("token", response.data.authToken);
           sessionStorage.setItem("user", JSON.stringify(response.data));
-          this.router.navigate(["/board"]);
+          this.userObj = JSON.parse(sessionStorage.getItem("user"));
+          if (this.userObj.email == "er.chandreshbhai@gmail.com") {
+            this.router.navigate(["/admin/dashboard"]);
+          }else{
+            this.router.navigate(["/board"]);
+          }
         }
         else {
           this.toastr.error(response.error, 'API Error');

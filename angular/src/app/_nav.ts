@@ -253,22 +253,22 @@ export const navItems: INavData[] = [
 export const navItemsAdmin: INavData[] = [
   {
     name: 'Dashboard',
-    url: '/dashboard',
+    url: '/admin/dashboard',
     icon: 'icon-star',
   },
   {
     name: 'Board',
-    url: '/dashboard',
+    url: '/admin/board',
     icon: 'icon-star',
   },
   {
     name: 'Users',
-    url: '/dashboard',
+    url: '/admin/users',
     icon: 'icon-star',
   },
   {
     name: 'Support',
-    url: '/dashboard',
+    url: '/admin/support',
     icon: 'icon-star',
   },
   {
