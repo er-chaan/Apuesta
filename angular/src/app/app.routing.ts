@@ -137,6 +137,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/app_admin/support/a-support.module').then(m => m.ASupportModule)
       },
       {
+        path: 'notifications',
+        loadChildren: () => import('./views/app_admin/notifications/a-notifications.module').then(m => m.ANotificationsModule)
+      },
+      {
         path: 'users',
         loadChildren: () => import('./views/app_admin/users/a-users.module').then(m => m.AUsersModule)
       },

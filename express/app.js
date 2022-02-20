@@ -118,5 +118,10 @@ app.use('/callback', paymentGatewayMiddleware, callbackRouter);
 app.use('/support', closedMiddleware, supportRouter);
 app.use('/transactions', closedMiddleware, transactionsRouter);
 
+// admin
+var adminRouter = require('./routes/admin.js');
+app.use('/admin', adminMiddleware, adminRouter);
+
+
 
 module.exports = app;

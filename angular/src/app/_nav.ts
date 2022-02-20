@@ -267,6 +267,11 @@ export const navItemsAdmin: INavData[] = [
     icon: 'icon-star',
   },
   {
+    name: 'Notifications',
+    url: '/admin/notifications',
+    icon: 'icon-star',
+  },
+  {
     name: 'Support',
     url: '/admin/support',
     icon: 'icon-star',

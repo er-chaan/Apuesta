@@ -56,4 +56,21 @@ export class ApiService {
     return this.httpClient.get<any>(this.api + "/bets/" + uid);
   }
 
+  // admin
+  getTotalUsers(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/users/total");
+  }
+  getTotalOnlineUsers(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/users/online");
+  }
+  getTotalBalanceUsers(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/users/balance");
+  }
+  getTotalBalanceBookie(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/bookie/balance");
+  }
+  getTotalBalanceJolo(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/jolo/balance");
+  }
+
 }
