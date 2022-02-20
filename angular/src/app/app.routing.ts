@@ -129,6 +129,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/app_admin/board/a-board.module').then(m => m.ABoardModule)
       },
       {
+        path: 'bets',
+        loadChildren: () => import('./views/app_admin/bets/a-bets.module').then(m => m.ABetsModule)
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./views/app_admin/dashboard/a-dashboard.module').then(m => m.ADashboardModule)
       },

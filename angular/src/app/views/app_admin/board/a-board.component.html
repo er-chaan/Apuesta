@@ -1,1 +1,49 @@
-<p>a-board works!</p>
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Board
+                    <i class="fa fa-refresh pull-right pointer" (click)="getBoardList()"></i>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="!getBoardListData.length">
+                        No Data
+                    </div>
+                    <div class="table-responsive">
+                        <table *ngIf="getBoardListData.length" datatable [dtOptions]="dtOptions" class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>teamA</th>
+                                    <th>rateTossTeamA</th>
+                                    <th>rateWinnerTeamA</th>
+                                    <th>teamB</th>
+                                    <th>rateTossTeamB</th>
+                                    <th>rateWinnerTeamB</th>
+                                    <th>startsAt</th>
+                                    <th>status</th>
+                                    <th>updatedAt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let x of getBoardListData;trackBy: trackFunction">
+                                    <td>{{x.id}}</td>
+                                    <td>{{x.teamA}}</td>
+                                    <td>{{x.rateTossTeamA}}</td>
+                                    <td>{{x.rateWinnerTeamA}}</td>
+                                    <td>{{x.teamB}}</td>
+                                    <td>{{x.rateTossTeamB}}</td>
+                                    <td>{{x.rateWinnerTeamB}}</td>
+                                    <td>{{x.startsAt | date : 'short'}}</td>
+                                    <td>{{x.status}}</td>
+                                    <td>{{x.updatedAt | date : 'short'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -87,8 +87,49 @@ router.put('/users/status', function (req, res) {
         });
 });
 
+router.put('/support/update/:id', function (req, res) {
+    dbConn.query("UPDATE support SET ? WHERE id='" + req.params.id + "' ", [req.body],
+        function (error, results, fields) {
+            if (error) {
+                return res.status(200).send({ status: false, error: error.sqlMessage });
+            } else {
+                return res.status(200).send({ status: true, data: req.body });
+            }
+        });
+});
+
 router.get('/notifications/list', function (req, res) {
     dbConn.query("SELECT * FROM notifications WHERE forAdmin = 0 ORDER BY id DESC", null, function (error, results) {
+        if (error) {
+            return res.status(200).send({ status: false, error: error.sqlMessage });
+        } else {
+            return res.status(200).send({ status: true, data: results });
+        }
+    });
+});
+
+router.get('/bets/list', function (req, res) {
+    dbConn.query("SELECT * FROM bets ORDER BY id DESC", null, function (error, results) {
+        if (error) {
+            return res.status(200).send({ status: false, error: error.sqlMessage });
+        } else {
+            return res.status(200).send({ status: true, data: results });
+        }
+    });
+});
+
+router.get('/support/list', function (req, res) {
+    dbConn.query("SELECT * FROM support ORDER BY id DESC", null, function (error, results) {
+        if (error) {
+            return res.status(200).send({ status: false, error: error.sqlMessage });
+        } else {
+            return res.status(200).send({ status: true, data: results });
+        }
+    });
+});
+
+router.get('/board/list', function (req, res) {
+    dbConn.query("SELECT * FROM board ORDER BY id DESC", null, function (error, results) {
         if (error) {
             return res.status(200).send({ status: false, error: error.sqlMessage });
         } else {

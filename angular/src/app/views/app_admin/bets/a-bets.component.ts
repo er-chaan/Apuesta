@@ -4,29 +4,31 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../core/api.service';
 
 @Component({
-  selector: 'app-a-board',
-  templateUrl: './a-board.component.html',
-  styleUrls: ['./a-board.component.scss']
+  selector: 'app-a-bets',
+  templateUrl: './a-bets.component.html',
+  styleUrls: ['./a-bets.component.scss']
 })
-export class ABoardComponent implements OnInit {
+export class ABetsComponent implements OnInit {
+
   constructor(
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private api: ApiService,
   ) { }
 
-  getBoardListData: any = [];
+  getBetsListData: any = [];
   dtOptions: DataTables.Settings = {};
+
   ngOnInit(): void {
-    this.getBoardList();
+    this.getBetsList();
   }
 
-  getBoardList() {
+  getBetsList() {
     this.dtOptions = {};
-    this.getBoardListData = [];
+    this.getBetsListData = [];
 
     this.spinner.show();
-    this.api.getBoardList().subscribe(
+    this.api.getBetsList().subscribe(
       (response) => {
         if (response.status) {
           this.dtOptions = {
@@ -36,7 +38,7 @@ export class ABoardComponent implements OnInit {
             processing: true,
             order: []
           };
-          this.getBoardListData = response.data;
+          this.getBetsListData = response.data;
         }
         else {
           this.toastr.error(response.error, 'API Error');
@@ -49,5 +51,5 @@ export class ABoardComponent implements OnInit {
   trackFunction(index: number, element: any) {
     return element ? element.id : null
   }
-
+  
 }

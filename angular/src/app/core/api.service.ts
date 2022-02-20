@@ -85,6 +85,19 @@ export class ApiService {
     return this.httpClient.delete<any>(this.api + "/admin/notifications/delete/" + data.id);
   }
   createNotification(data): Observable<any> {
-    return this.httpClient.post<any>(this.api + "/admin/notifications/create",data);
+    return this.httpClient.post<any>(this.api + "/admin/notifications/create", data);
   }
+  getBetsList(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/bets/list");
+  }
+  getSupportList(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/support/list");
+  }
+  getBoardList(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/board/list");
+  }
+  supportUpdate(data: any): Observable<any> {
+    return this.httpClient.put<any>(this.api + "/admin/support/update/"+data.id, data);
+  }
+
 }

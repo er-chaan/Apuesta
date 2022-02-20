@@ -1,0 +1,48 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Bets
+                    <i class="fa fa-refresh pull-right pointer" (click)="getBetsList()"></i>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="!getBetsListData.length">
+                        No Data
+                    </div>
+                    <div class="table-responsive">
+                        <table *ngIf="getBetsListData.length" datatable [dtOptions]="dtOptions"
+                            class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>uid</th>
+                                    <th>bid</th>
+                                    <th>team</th>
+                                    <th>type</th>
+                                    <th>rate</th>
+                                    <th>amount</th>
+                                    <th>updatedAt</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let x of getBetsListData;trackBy: trackFunction">
+                                    <td>{{x.id}}</td>
+                                    <td>{{x.uid}}</td>
+                                    <td>{{x.bid}}</td>
+                                    <td>{{x.team}}</td>
+                                    <td>{{x.type}}</td>
+                                    <td>{{x.rate}}</td>
+                                    <td>{{x.amount}}</td>
+                                    <td>{{x.updatedAt | date : 'short'}}</td>
+                                    <td>{{x.status}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

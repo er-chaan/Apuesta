@@ -58,7 +58,11 @@ export class LandingComponent implements OnInit {
   signInWithGoogle(): void {
     this.spinner.show();
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x) => {
-      this.auth();
+      if(this.user){
+        this.auth();
+      }else{
+        this.toastr.error("Retry Later !");
+      }
     }).catch((x) => {
       this.spinner.hide();
       if (x.error) {

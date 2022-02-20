@@ -6,6 +6,9 @@ var mail = require('../mail');
 
 
 router.post('/', function (req, res) {
+  if(!req.body.email){
+    return res.status(200).send({ status: false, error: "Retry Later !" });
+  }
   req.body.response = "NULL"; 
   // check active start
   dbConn.query("SELECT * FROM users WHERE email=? AND status='inactive'", req.body.email, function (error, results) {
