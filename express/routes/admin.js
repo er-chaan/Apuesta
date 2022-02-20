@@ -98,6 +98,17 @@ router.put('/support/update/:id', function (req, res) {
         });
 });
 
+router.put('/board/update/:id', function (req, res) {
+    dbConn.query("UPDATE board SET ? WHERE id='" + req.params.id + "' ", [req.body],
+        function (error, results, fields) {
+            if (error) {
+                return res.status(200).send({ status: false, error: error.sqlMessage });
+            } else {
+                return res.status(200).send({ status: true, data: req.body });
+            }
+        });
+});
+
 router.get('/notifications/list', function (req, res) {
     dbConn.query("SELECT * FROM notifications WHERE forAdmin = 0 ORDER BY id DESC", null, function (error, results) {
         if (error) {

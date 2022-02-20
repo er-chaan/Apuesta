@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../core/api.service';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-a-board',
@@ -13,6 +14,7 @@ export class ABoardComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private api: ApiService,
+    private modalService: BsModalService,
   ) { }
 
   getBoardListData: any = [];
@@ -50,4 +52,41 @@ export class ABoardComponent implements OnInit {
     return element ? element.id : null
   }
 
+
+  modalData: any;
+  editModal(data, template) {
+    this.modalData = data;
+    this.openModal(template);
+  }
+  closeModal() {
+    this.modalService.hide();
+  }
+  modalRef: BsModalRef;
+  openModal(template: TemplateRef<any>) {
+    let modalOptions: ModalOptions = {
+      backdrop: 'static',
+      keyboard: false
+    };
+    this.modalRef = this.modalService.show(template, modalOptions);
+  }
+  
+  updateRates() {
+    delete this.modalData.startsAt;
+    delete this.modalData.endsAt;
+    delete this.modalData.updatedAt;
+
+    this.spinner.show();
+    this.api.boardUpdate(this.modalData).subscribe(
+      (response) => {
+        if (response.status) {
+          this.getBoardList();
+          this.modalService.hide();
+        }
+        else {
+          this.toastr.error(response.error, 'API Error');
+        }
+        this.spinner.hide();
+      }
+    );
+  }
 }

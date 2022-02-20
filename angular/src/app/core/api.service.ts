@@ -99,5 +99,8 @@ export class ApiService {
   supportUpdate(data: any): Observable<any> {
     return this.httpClient.put<any>(this.api + "/admin/support/update/"+data.id, data);
   }
+  boardUpdate(data: any): Observable<any> {
+    return this.httpClient.put<any>(this.api + "/admin/board/update/"+data.id, data);
+  }
 
 }
