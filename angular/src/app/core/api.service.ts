@@ -72,5 +72,10 @@ export class ApiService {
   getTotalBalanceJolo(): Observable<any> {
     return this.httpClient.get<any>(this.api + "/admin/jolo/balance");
   }
-
+  getUsersList(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/users/list");
+  }
+  updateUserStatus(data: any): Observable<any> {
+    return this.httpClient.put<any>(this.api + "/admin/users/status", data);
+  }
 }

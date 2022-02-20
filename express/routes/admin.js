@@ -65,9 +65,26 @@ router.get('/jolo/balance', function (req, res) {
         });
 });
 
+router.get('/users/list', function (req, res) {
+    dbConn.query("SELECT * FROM users WHERE email !='er.chandreshbhai@gmail.com' ORDER BY id DESC", null, function (error, results) {
+        if (error) {
+            return res.status(200).send({ status: false, error: error.sqlMessage });
+        } else {
+            return res.status(200).send({ status: true, data: results });
+        }
+    });
+});
 
 
-
-
+router.put('/users/status', function (req, res) {
+    dbConn.query("UPDATE users SET ?, token='' WHERE id='" + req.body.id + "' ", [{ status: req.body.status }],
+        function (error, results, fields) {
+            if (error) {
+                return res.status(200).send({ status: false, error: error.sqlMessage });
+            } else {
+                return res.status(200).send({ status: true, data: req.body });
+            }
+        });
+});
 
 module.exports = router;

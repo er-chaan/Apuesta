@@ -17,12 +17,15 @@ export class ADashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.refresh();
+  }
+
+  refresh(){
     this.getTotalUsers();
     this.getTotalOnlineUsers();
     this.getTotalBalanceUsers();
     this.getTotalBalanceBookie();
     this.getTotalBalanceJolo();
-
   }
 
   totalUsers: any = 0;
