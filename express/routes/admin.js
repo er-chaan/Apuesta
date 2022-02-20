@@ -87,4 +87,25 @@ router.put('/users/status', function (req, res) {
         });
 });
 
+router.get('/notifications/list', function (req, res) {
+    dbConn.query("SELECT * FROM notifications WHERE forAdmin = 0 ORDER BY id DESC", null, function (error, results) {
+        if (error) {
+            return res.status(200).send({ status: false, error: error.sqlMessage });
+        } else {
+            return res.status(200).send({ status: true, data: results });
+        }
+    });
+});
+
+router.delete('/notifications/delete/:id', function (req, res) {
+    console.log(req.body.id);
+    dbConn.query("DELETE FROM notifications WHERE ?", [{ id: req.params.id }], function (error, results) {
+        if (error) {
+            return res.status(200).send({ status: false, error: error.sqlMessage });
+        } else {
+            return res.status(200).send({ status: true, data: results });
+        }
+    });
+});
+
 module.exports = router;

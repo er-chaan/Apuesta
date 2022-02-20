@@ -78,4 +78,10 @@ export class ApiService {
   updateUserStatus(data: any): Observable<any> {
     return this.httpClient.put<any>(this.api + "/admin/users/status", data);
   }
+  getNotificationsList(): Observable<any> {
+    return this.httpClient.get<any>(this.api + "/admin/notifications/list");
+  }
+  deleteNotification(data): Observable<any> {
+    return this.httpClient.delete<any>(this.api + "/admin/notifications/delete/"+data.id);
+  }
 }
