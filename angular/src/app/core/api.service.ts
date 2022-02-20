@@ -82,6 +82,9 @@ export class ApiService {
     return this.httpClient.get<any>(this.api + "/admin/notifications/list");
   }
   deleteNotification(data): Observable<any> {
-    return this.httpClient.delete<any>(this.api + "/admin/notifications/delete/"+data.id);
+    return this.httpClient.delete<any>(this.api + "/admin/notifications/delete/" + data.id);
+  }
+  createNotification(data): Observable<any> {
+    return this.httpClient.post<any>(this.api + "/admin/notifications/create",data);
   }
 }

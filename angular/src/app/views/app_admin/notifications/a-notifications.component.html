@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Notifications
                     <i class="fa fa-refresh pull-right pointer" (click)="getNotificationsList()"></i>
-                    <i class="fa fa-plus pull-right pointer" (click)="getNotificationsList()"></i>
+                    <i class="fa fa-plus pull-right pointer" (click)="createNotificationModal(template)"></i>
                 </div>
                 <div class="card-body">
                     <div *ngIf="!getNotificationsListData.length">
@@ -42,3 +42,34 @@
         </div>
     </div>
 </div>
+
+
+
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            Create Notification
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input placeholder="title" style="width: 100%;" autocomplete="off" type="text" [(ngModel)]="createNotificationData.title">
+        <div *ngIf="!createNotificationData.title" class="errorMsg">
+            <div>Required.</div>
+        </div>
+        <hr>
+        <textarea style="width: 100%;" autocomplete="off" [(ngModel)]="createNotificationData.description" placeholder="description">
+        </textarea>
+        <div *ngIf="!createNotificationData.description" class="errorMsg">
+            <div>Required.</div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+        <button [disabled]="!createNotificationData.title || !createNotificationData.description" type="button"
+            class="btn btn-info" (click)="createNotification()">Create</button>
+    </div>
+</ng-template>

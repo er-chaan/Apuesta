@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../core/api.service';
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-a-notifications',
@@ -14,6 +15,7 @@ export class ANotificationsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
     private api: ApiService,
+    private modalService: BsModalService,
   ) { }
 
   getNotificationsListData: any = [];
@@ -64,6 +66,40 @@ export class ANotificationsComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+
+  createNotificationModal(template) {
+    this.createNotificationData = {
+      title: "",
+      description: ""
+    }
+    this.openModal(template);
+  }
+
+  createNotificationData: any = {};
+  createNotification() {
+    this.spinner.show();
+    this.api.createNotification(this.createNotificationData).subscribe(
+      (response) => {
+        if (response.status) {
+          this.getNotificationsList();
+          this.modalService.hide();
+        }
+        else {
+          this.toastr.error(response.error, 'API Error');
+        }
+        this.spinner.hide();
+      }
+    );
+  }
+
+  modalRef: BsModalRef;
+  openModal(template: TemplateRef<any>) {
+    let modalOptions: ModalOptions = {
+      backdrop: 'static',
+      keyboard: false
+    };
+    this.modalRef = this.modalService.show(template, modalOptions);
   }
 
   trackFunction(index: number, element: any) {

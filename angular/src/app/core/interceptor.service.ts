@@ -52,11 +52,11 @@ export class InterceptorService implements HttpInterceptor {
         error => {
           this.spinner.hide();
           console.log(error);
-          this.toastr.error(error.message, 'API Error');
+          // this.toastr.error(error.message, 'API Error');
           if (error.status == 401) {
             sessionStorage.clear();
             this.router.navigate(['/landing']);
-            this.toastr.error('session cleaned', 'ALERT');
+            // this.toastr.error('session cleaned', 'ALERT');
           }
         }
       )

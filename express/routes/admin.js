@@ -108,4 +108,18 @@ router.delete('/notifications/delete/:id', function (req, res) {
     });
 });
 
+
+// dbConn.query(scripts);
+router.post('/notifications/create', function (req, res) {
+    scripts = `INSERT INTO notifications(title, description) 
+    VALUES('${req.body.title}','${req.body.description}');`;
+    dbConn.query(scripts, null, function (error) {
+        if (error) {
+            return res.status(200).send({ status: false, error: error.sqlMessage });
+        } else {
+            return res.status(200).send({ status: true });
+        }
+    });
+});
+
 module.exports = router;
