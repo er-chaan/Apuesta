@@ -13,6 +13,17 @@ curl_close($ch);
 // -----------------------------------------------
 $response = json_decode($output); //object
 
+$teams = [
+    "Papua New Guinea", "Scotland", "United States",
+    "Namibia", "Netherlands", "Pakistan", "Zimbabwe",
+    "Afghanistan", "Bangladesh", "England",
+    "India", "New Zealand", "Australia",
+    "Ireland", "Germany", "Oman", "Nepal", "West Indies",
+    "South Africa", "Sri Lanka", "United Arab Emirates",
+    "Bahrain", "Canada", "Philippines"
+];
+// echo sizeof($teams);
+// exit;
 if (!$response->ResponseError) {
     // ----------------
     foreach ($response->UpcomingFixtures as $key => $value) {
@@ -27,9 +38,11 @@ if (!$response->ResponseError) {
                 $value->EndDateTime = date("Y-m-d H:i:s", strtotime($value->EndDateTime));
                 $value->HomeTeam->Name = str_replace(" Men", "", $value->HomeTeam->Name);
                 $value->AwayTeam->Name = str_replace(" Men", "", $value->AwayTeam->Name);
-                $insert = "INSERT INTO board (`resultText`,`apiId`,`format`,`teamA`,`teamB`, `startsAt`,`endsAt`,`status`) 
-                                    VALUES ('" . $value->ResultText . "'," . $value->Id . ", '" . $value->GameType . "', '" . $value->HomeTeam->Name . "','" . $value->AwayTeam->Name . "','" . $value->StartDateTime . "','" . $value->EndDateTime . "','upcoming')";
-                $conn->query($insert);
+                if (in_array($value->HomeTeam->Name, $teams) && in_array($value->AwayTeam->Name, $teams)) {
+                    $insert = "INSERT INTO board (`resultText`,`apiId`,`format`,`teamA`,`teamB`, `startsAt`,`endsAt`,`status`) 
+                    VALUES ('" . $value->ResultText . "'," . $value->Id . ", '" . $value->GameType . "', '" . $value->HomeTeam->Name . "','" . $value->AwayTeam->Name . "','" . $value->StartDateTime . "','" . $value->EndDateTime . "','upcoming')";
+                    $conn->query($insert);
+                }
             }
         }
     }
@@ -191,7 +204,7 @@ if ($result->num_rows) {
                 $values = "status='" . $status . "' ";
                 $update = "UPDATE bets SET " . $values . " WHERE id=" . $value["id"];
                 $conn->query($update);
-                echo $update."\n";
+                echo $update . "\n";
             }
             if ($status == "won") {
                 $winningAmt = $value["rate"] * $value["amount"];
