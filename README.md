@@ -3,4 +3,4 @@
 - npm start
 - nodemon DEBUG=express:* npm start
 
-![alt](https://link)
+![alt](https://raw.githubusercontent.com/er-chaan/el-Apuesta/main/screenshots/app.png)
