@@ -84,4 +84,19 @@ async function InitiateTransactionAPI(amount, uid) {
 }
 
 
+// curl -X POST 'https://staging-dashboard.paytm.com/bpay/api/v1/disburse/order/bank' \
+// --header 'Content-Type: application/json' \
+// --header 'x-mid: {mid}' \
+// --header 'x-checksum: {checksum}' \
+// --data '{"subwalletGuid":"28054249-XXXX-XXXX-af8f-fa163e429e83","orderId":"ORDERID_98765","beneficiaryAccount":"918008484891","beneficiaryIFSC":"PYTM0123456","purpose":"SALARY_DISBURSEMENT","date":"2020-06-01","amount":"1.00"}'
+
+// https://business.paytm.com/docs/api/bank-transfer-api/
+// async function BankTransferAPI(amount, uid) {
+//     return new Promise(
+
+//     );
+// }
+
+
 module.exports.InitiateTransactionAPI = InitiateTransactionAPI;
+// module.exports.BankTransferAPI = BankTransferAPI;
